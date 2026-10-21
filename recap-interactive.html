@@ -1,0 +1,3436 @@
+<!doctype html>
+<html lang="zh-CN" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>RECAP 交互实验台</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100dvh - 2rem)!important;margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe id="codex-visualization" sandbox="allow-scripts" referrerpolicy="no-referrer" title="RECAP 交互实验台" data-srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-CN&quot; data-visualize-standalone&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;RECAP 交互实验台&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 10px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+.cursor-interaction {
+  cursor: var(--cursor-interaction, pointer);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: var(--cursor-interaction, pointer);
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: var(--cursor-interaction, pointer);
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover,
+.nav-link:not(:disabled):not([aria-disabled=&quot;true&quot;]):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled=&quot;true&quot;] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@media (pointer: coarse) {
+  .btn,
+  .nav-link,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, var(--font-size-normal));
+  }
+
+  .form-control[type=&quot;file&quot;]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type=&quot;color&quot;] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;week&quot;]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: &quot;&quot;;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 44px;
+  }
+
+  .form-range::-moz-range-track {
+    height: 44px;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    margin-top: 12px;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;script type=&quot;application/json&quot; id=&quot;codex-visualization-widget-state&quot;&gt;__CODEX_VISUALIZATION_WIDGET_STATE__&lt;/script&gt;
+&lt;script&gt;(() =&gt; {
+  const root = document.documentElement;
+  const mediaQuery = globalThis.matchMedia(&quot;(prefers-color-scheme: dark)&quot;);
+  const apply = Reflect.apply;
+  const isArray = Array.isArray;
+  const hasOwn = Object.hasOwn;
+  const parentWindow = globalThis.parent;
+  const stringify = JSON.stringify;
+  const parse = JSON.parse;
+  const encode = TextEncoder.prototype.encode.bind(new TextEncoder());
+  const initialStateElement = document.getElementById(
+    &quot;codex-visualization-widget-state&quot;,
+  );
+  const initialGlobals = parse(initialStateElement?.textContent ?? &quot;{}&quot;);
+  initialStateElement?.remove();
+  /** @type {Record&lt;string, unknown&gt; | null} */
+  let state = initialGlobals.widgetState ?? null;
+  const statePersistence = initialGlobals.statePersistence ?? &quot;none&quot;;
+  let nextStateRequestId = 0;
+  /** @type {Map&lt;number, { resolve: () =&gt; void; reject: (error: Error) =&gt; void; timeout: ReturnType&lt;typeof globalThis.setTimeout&gt;; serializedState: string }&gt;} */
+  const pendingStateWrites = new Map();
+  const persistenceError = () =&gt;
+    Object.assign(
+      new Error(&quot;The host could not persist the widget state update&quot;),
+      {
+        code: -32000,
+        data: { code: &quot;widget_state_persistence_failed&quot;, retryable: false },
+      },
+    );
+  /**
+   * @param {object} prototype
+   * @param {string} property
+   */
+  const getPrototypeGetter = (prototype, property) =&gt; {
+    // oxlint-disable-next-line typescript/unbound-method -- invoked through captured Reflect.apply
+    const getter = Object.getOwnPropertyDescriptor(prototype, property)?.get;
+    if (getter == null) {
+      throw new Error(`Missing ${property} getter`);
+    }
+    return getter;
+  };
+  const getMessageData = getPrototypeGetter(MessageEvent.prototype, &quot;data&quot;);
+  const getMessagePorts = getPrototypeGetter(MessageEvent.prototype, &quot;ports&quot;);
+  const getMessageSource = getPrototypeGetter(MessageEvent.prototype, &quot;source&quot;);
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const addHostMessageListener = MessagePort.prototype.addEventListener;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const postHostMessage = MessagePort.prototype.postMessage;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const startHostPort = MessagePort.prototype.start;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const stopMessagePropagation = Event.prototype.stopImmediatePropagation;
+  /** @type {MessagePort | null} */
+  let hostPort = null;
+  const postToHost = (type, payload) =&gt; {
+    if (hostPort != null) {
+      apply(postHostMessage, hostPort, [{ type, ...payload }]);
+    }
+  };
+  const openExternal = ({ href }) =&gt; {
+    if (globalThis.navigator.userActivation?.isActive === true) {
+      postToHost(&quot;open-external&quot;, { href });
+    }
+  };
+  const sendFollowUpMessage = ({ context, prompt, title }) =&gt; {
+    if (globalThis.navigator.userActivation?.isActive === true) {
+      postToHost(&quot;follow-up&quot;, { context, prompt, title });
+    }
+    return Promise.resolve();
+  };
+  /**
+   * @param {Record&lt;string, unknown&gt; | ((previous: Record&lt;string, unknown&gt; | null) =&gt; Record&lt;string, unknown&gt;)} next
+   * @returns {Promise&lt;void&gt;}
+   */
+  const setWidgetState = async (next) =&gt; {
+    const nextState = typeof next === &quot;function&quot; ? next(state) : next;
+    if (
+      nextState == null ||
+      typeof nextState !== &quot;object&quot; ||
+      isArray(nextState)
+    ) {
+      throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+    }
+    const inputState = stringify(
+      nextState,
+      (_key, /** @type {unknown} */ value) =&gt; {
+        if (
+          typeof value === &quot;undefined&quot; ||
+          typeof value === &quot;function&quot; ||
+          typeof value === &quot;symbol&quot; ||
+          (typeof value === &quot;number&quot; &amp;&amp; !Number.isFinite(value))
+        ) {
+          throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+        }
+        return value;
+      },
+    );
+    const parsedState = parse(inputState);
+    if (
+      parsedState == null ||
+      typeof parsedState !== &quot;object&quot; ||
+      isArray(parsedState)
+    ) {
+      throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+    }
+    const storedState = {
+      modelContent: null,
+      privateContent: null,
+      ...parsedState,
+    };
+    const serializedState = stringify(storedState);
+    if (encode(serializedState).length &gt; 16 * 1024) {
+      throw new TypeError(
+        &quot;Widget state must be a JSON object of at most 16 KiB&quot;,
+      );
+    }
+    if (
+      hasOwn(storedState, &quot;imageIds&quot;) &amp;&amp;
+      (!isArray(storedState.imageIds) ||
+        storedState.imageIds.some(
+          (/** @type {unknown} */ id) =&gt; typeof id !== &quot;string&quot;,
+        ))
+    ) {
+      throw new TypeError(&quot;Widget state imageIds must be an array of strings&quot;);
+    }
+    if (storedState.imageIds?.length &gt; 0) {
+      throw Object.assign(
+        new TypeError(&quot;Visualization state does not support image attachments&quot;),
+        { code: -32602, data: { code: &quot;images_unsupported&quot; } },
+      );
+    }
+    state = storedState;
+    globalThis.openai.widgetState = state;
+    globalThis.dispatchEvent(
+      new CustomEvent(&quot;openai:set_globals&quot;, {
+        detail: { globals: { widgetState: state } },
+      }),
+    );
+    if (statePersistence === &quot;none&quot;) {
+      throw persistenceError();
+    }
+    const id = ++nextStateRequestId;
+    return new Promise((resolve, reject) =&gt; {
+      const timeout = globalThis.setTimeout(() =&gt; {
+        pendingStateWrites.delete(id);
+        reject(persistenceError());
+      }, 30_000);
+      pendingStateWrites.set(id, { resolve, reject, timeout, serializedState });
+      postToHost(&quot;widget-state-write&quot;, { id, state: serializedState });
+    });
+  };
+  const syncTheme = () =&gt; {
+    const theme = mediaQuery.matches ? &quot;dark&quot; : &quot;light&quot;;
+    root.dataset.theme = theme;
+    globalThis.openai = {
+      ...globalThis.openai,
+      openExternal,
+      sendFollowUpMessage,
+      setWidgetState,
+      theme,
+      visualizationStyleVariables: {},
+      visualizationTheme: theme,
+      widgetState: state,
+      statePersistence,
+      stateModelContext: &quot;none&quot;,
+    };
+    globalThis.dispatchEvent(
+      new CustomEvent(&quot;openai:set_globals&quot;, {
+        detail: { globals: globalThis.openai },
+      }),
+    );
+  };
+  const sendHeight = () =&gt; {
+    postToHost(&quot;height&quot;, {
+      height: Math.ceil(
+        Math.max(
+          document.body.scrollHeight,
+          document.body.getBoundingClientRect().height,
+        ),
+      ),
+    });
+  };
+
+  globalThis.addEventListener(
+    &quot;message&quot;,
+    (event) =&gt; {
+      const data = apply(getMessageData, event, []);
+      const ports = apply(getMessagePorts, event, []);
+      const source = apply(getMessageSource, event, []);
+      if (
+        hostPort != null ||
+        source !== parentWindow ||
+        typeof data !== &quot;object&quot; ||
+        data?.type !== &quot;codex-visualization-initialize&quot; ||
+        !isArray(ports) ||
+        ports.length !== 1
+      ) {
+        return;
+      }
+      apply(stopMessagePropagation, event, []);
+      const nextHostPort = ports[0];
+      try {
+        apply(addHostMessageListener, nextHostPort, [
+          &quot;message&quot;,
+          (event) =&gt; {
+            const data = apply(getMessageData, event, []);
+            if (typeof data === &quot;object&quot; &amp;&amp; data?.type === &quot;measure&quot;) {
+              sendHeight();
+            } else if (
+              typeof data === &quot;object&quot; &amp;&amp;
+              data?.type === &quot;widget-state-result&quot;
+            ) {
+              /** @type {unknown} */
+              const id = data.id;
+              if (typeof id !== &quot;number&quot;) {
+                return;
+              }
+              const pending = pendingStateWrites.get(id);
+              if (pending != null) {
+                pendingStateWrites.delete(id);
+                globalThis.clearTimeout(pending.timeout);
+                if (data.ok === true) {
+                  pending.resolve();
+                } else {
+                  pending.reject(persistenceError());
+                }
+              }
+            }
+          },
+        ]);
+        apply(startHostPort, nextHostPort, []);
+      } catch {
+        return;
+      }
+      hostPort = nextHostPort;
+      for (const [id, { serializedState }] of pendingStateWrites) {
+        postToHost(&quot;widget-state-write&quot;, { id, state: serializedState });
+      }
+      sendHeight();
+    },
+    { capture: true },
+  );
+  document.currentScript?.remove();
+  mediaQuery.addEventListener(&quot;change&quot;, syncTheme);
+  globalThis.addEventListener(&quot;click&quot;, (event) =&gt; {
+    if (event.defaultPrevented) {
+      return;
+    }
+    let element = null;
+    if (event.target instanceof globalThis.Element) {
+      element = event.target;
+    } else if (event.target instanceof globalThis.Node) {
+      element = event.target.parentElement;
+    }
+    const link = element?.closest(&quot;a[href]&quot;);
+    const href = link?.getAttribute(&quot;href&quot;);
+    if (href == null) {
+      return;
+    }
+    if (href.startsWith(&quot;#&quot;)) {
+      let id;
+      try {
+        id = decodeURIComponent(href.slice(1));
+      } catch {
+        return;
+      }
+      const target = id.length === 0 ? root : document.getElementById(id);
+      if (
+        target == null ||
+        globalThis.navigator.userActivation?.isActive !== true
+      ) {
+        return;
+      }
+      event.preventDefault();
+      postToHost(&quot;scroll-to&quot;, {
+        top: target.getBoundingClientRect().top + globalThis.scrollY,
+      });
+      return;
+    }
+    event.preventDefault();
+    openExternal({ href });
+  });
+  new ResizeObserver(sendHeight).observe(document.body);
+  syncTheme();
+})();
+&lt;/script&gt;
+&lt;div id=&quot;recap-workflow&quot;&gt;
+  &lt;style&gt;
+    html[data-recap-theme=&quot;light&quot;] {
+      color-scheme: light !important;
+      --background: #fffafd; --foreground: #28222a; --card: #f4edf2;
+      --card-foreground: #28222a; --muted-foreground: #6d5967;
+      --primary: #276aa8; --primary-foreground: #ffffff;
+      --accent: #e6edf7; --accent-foreground: #205b91;
+      --secondary: #f0e8ee; --secondary-foreground: #28222a;
+      --popover: #ffffff; --popover-foreground: #28222a;
+      --border: #dfd3dc; --input: #dfd3dc; --ring: #276aa8;
+      --viz-series-1: #276aa8; --viz-series-2: #bf611c;
+      --viz-series-3: #28834c; --viz-series-4: #b3406d;
+      --viz-series-5: #8952b8; --viz-series-6: #248783;
+    }
+    html[data-recap-theme=&quot;dark&quot;] {
+      color-scheme: dark !important;
+      --background: #171119; --foreground: #f6edf3; --card: #251c27;
+      --card-foreground: #f6edf3; --muted-foreground: #bca8b7;
+      --primary: #ff5da2; --primary-foreground: #2a0d1b;
+      --accent: #422035; --accent-foreground: #ff91be;
+      --secondary: #342638; --secondary-foreground: #f6edf3;
+      --popover: #302234; --popover-foreground: #f6edf3;
+      --border: #4a3545; --input: #4a3545; --ring: #ff80b5;
+      --viz-series-1: #ff5da2; --viz-series-2: #f3b576;
+      --viz-series-3: #8bd5a7; --viz-series-4: #f0a4c9;
+      --viz-series-5: #ce9cf0; --viz-series-6: #71c7c2;
+    }
+    html[data-recap-theme=&quot;dark&quot;] #recap-workflow .form-range::-webkit-slider-thumb { background: var(--primary); }
+    html[data-recap-theme=&quot;dark&quot;] #recap-workflow .form-range::-moz-range-thumb { background: var(--primary); }
+    html[data-recap-theme=&quot;dark&quot;] #recap-workflow .btn-primary { background: var(--primary); color: var(--primary-foreground); }
+    #recap-workflow {
+      color: var(--foreground);
+      background: transparent;
+      width: 100%;
+    }
+    #recap-workflow .rw-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    #recap-workflow .rw-controls {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      gap: 14px 18px;
+      align-items: end;
+      margin-bottom: 16px;
+    }
+    #recap-workflow .rw-control {
+      min-width: 0;
+    }
+    #recap-workflow .rw-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    #recap-workflow .rw-flags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    #recap-workflow .rw-sim-config {
+      display: grid;
+      grid-template-columns: minmax(170px, 1fr) minmax(170px, 1fr) auto;
+      gap: 14px 18px;
+      align-items: end;
+      margin-bottom: 10px;
+    }
+    #recap-workflow .rw-sim-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    #recap-workflow .rw-sim-status {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      align-items: center;
+      margin: 8px 0 12px;
+    }
+    #recap-workflow .rw-sim-status strong {
+      font-weight: 500;
+    }
+    #recap-workflow .rw-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    #recap-workflow .rw-stat-main {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    #recap-workflow .rw-canvas {
+      position: relative;
+      width: 100%;
+      min-height: 430px;
+    }
+    #recap-workflow .rw-canvas svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+    #recap-workflow .rw-node {
+      fill: var(--card);
+      stroke: var(--border);
+      stroke-width: 1.5;
+      transition: fill 180ms ease, stroke 180ms ease, transform 180ms ease;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    #recap-workflow .rw-node.active {
+      fill: color-mix(in srgb, var(--viz-series-1) 16%, var(--card));
+      stroke: var(--viz-series-1);
+      stroke-width: 2.5;
+      transform: translateY(-3px);
+    }
+    #recap-workflow .rw-node.rl {
+      fill: color-mix(in srgb, var(--viz-series-2) 10%, var(--card));
+    }
+    #recap-workflow .rw-node.robot {
+      fill: color-mix(in srgb, var(--viz-series-3) 10%, var(--card));
+    }
+    #recap-workflow .rw-arrow {
+      stroke: var(--border);
+      stroke-width: 2;
+      fill: none;
+      marker-end: url(#rw-arrowhead);
+    }
+    #recap-workflow .rw-loop {
+      stroke: var(--viz-series-1);
+      stroke-width: 2.5;
+      fill: none;
+      marker-end: url(#rw-arrowhead-active);
+    }
+    #recap-workflow .rw-main-text {
+      fill: var(--foreground);
+      font-size: 14px;
+      font-weight: 500;
+      text-anchor: middle;
+    }
+    #recap-workflow .rw-sub-text {
+      fill: var(--muted-foreground);
+      font-size: 12px;
+      font-weight: 400;
+      text-anchor: middle;
+    }
+    #recap-workflow .rw-lane-text {
+      fill: var(--muted-foreground);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .03em;
+    }
+    #recap-workflow .rw-data-track {
+      fill: color-mix(in srgb, var(--border) 55%, transparent);
+    }
+    #recap-workflow .rw-data-success { fill: var(--viz-series-2); }
+    #recap-workflow .rw-data-failure { fill: var(--viz-series-4); }
+    #recap-workflow .rw-data-correction { fill: var(--viz-series-3); }
+    #recap-workflow .rw-detail {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 14px;
+    }
+    #recap-workflow .rw-detail .card {
+      min-height: 76px;
+    }
+    #recap-workflow .rw-detail-title {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    #recap-workflow .rw-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    #recap-workflow .rw-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      align-items: center;
+      margin-top: 8px;
+      color: var(--muted-foreground);
+    }
+    #recap-workflow .rw-data-section {
+      margin-top: 20px;
+    }
+    #recap-workflow .rw-data-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    #recap-workflow .rw-data-tools {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) minmax(240px, 2fr);
+      gap: 14px 18px;
+      align-items: end;
+      margin-bottom: 12px;
+    }
+    #recap-workflow .rw-packet {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    #recap-workflow .rw-packet dl {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      gap: 5px 12px;
+      margin: 8px 0 0;
+    }
+    #recap-workflow .rw-packet dt {
+      color: var(--muted-foreground);
+      font-weight: 400;
+    }
+    #recap-workflow .rw-packet dd {
+      margin: 0;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    #recap-workflow .rw-chain {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    #recap-workflow .rw-chain-step {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 8px;
+      color: var(--muted-foreground);
+      white-space: nowrap;
+    }
+    #recap-workflow .rw-chain-step.ready {
+      border-color: var(--viz-series-1);
+      color: var(--foreground);
+      background: color-mix(in srgb, var(--viz-series-1) 10%, transparent);
+    }
+    #recap-workflow .rw-chain-arrow {
+      color: var(--muted-foreground);
+    }
+    #recap-workflow .rw-data-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    #recap-workflow .rw-data-table {
+      width: 100%;
+      min-width: 860px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    #recap-workflow .rw-data-table th,
+    #recap-workflow .rw-data-table td {
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    #recap-workflow .rw-data-table th {
+      color: var(--muted-foreground);
+      font-weight: 500;
+    }
+    #recap-workflow .rw-data-table tr:last-child td {
+      border-bottom: 0;
+    }
+    #recap-workflow .rw-data-table tr.rw-selected-row td {
+      background: color-mix(in srgb, var(--viz-series-1) 9%, transparent);
+    }
+    #recap-workflow .rw-step-button {
+      min-width: 58px;
+      padding: 3px 7px;
+    }
+    #recap-workflow .rw-cell-positive { color: var(--viz-series-2); }
+    #recap-workflow .rw-cell-negative { color: var(--viz-series-4); }
+    #recap-workflow .rw-cell-pending { color: var(--muted-foreground); }
+    #recap-workflow .rw-dist-section {
+      margin-top: 20px;
+    }
+    #recap-workflow .rw-dist-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    #recap-workflow .rw-dist-controls {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(130px, 1fr));
+      gap: 12px 16px;
+      align-items: end;
+      margin-bottom: 10px;
+    }
+    #recap-workflow .rw-dist-chart {
+      width: 100%;
+    }
+    #recap-workflow .rw-dist-chart svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    #recap-workflow .rw-chart-frame {
+      fill: transparent;
+      stroke: var(--border);
+      stroke-width: 1;
+    }
+    #recap-workflow .rw-gridline {
+      stroke: var(--border);
+      stroke-width: 1;
+      opacity: .55;
+    }
+    #recap-workflow .rw-value-current {
+      fill: color-mix(in srgb, var(--viz-series-1) 18%, transparent);
+      stroke: var(--viz-series-1);
+      stroke-width: 2;
+    }
+    #recap-workflow .rw-value-future {
+      fill: color-mix(in srgb, var(--viz-series-2) 14%, transparent);
+      stroke: var(--viz-series-2);
+      stroke-width: 2;
+    }
+    #recap-workflow .rw-adv-area {
+      fill: color-mix(in srgb, var(--viz-series-5) 18%, transparent);
+      stroke: var(--viz-series-5);
+      stroke-width: 2;
+    }
+    #recap-workflow .rw-threshold {
+      stroke: var(--viz-series-4);
+      stroke-width: 2;
+      stroke-dasharray: 5 4;
+    }
+    #recap-workflow .rw-sample-marker {
+      stroke: var(--foreground);
+      stroke-width: 2;
+    }
+    #recap-workflow .rw-chart-label {
+      fill: var(--foreground);
+      font-size: 12px;
+      font-weight: 400;
+    }
+    #recap-workflow .rw-chart-muted {
+      fill: var(--muted-foreground);
+      font-size: 12px;
+      font-weight: 400;
+    }
+    #recap-workflow .rw-binary-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, auto);
+      gap: 12px;
+      align-items: stretch;
+      margin-top: 10px;
+    }
+    #recap-workflow .rw-formula-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 6px 10px;
+    }
+    #recap-workflow .rw-binary-value {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    #recap-workflow .rw-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-right: 5px;
+    }
+    #recap-workflow .rw-dot.success { background: var(--viz-series-2); }
+    #recap-workflow .rw-dot.failure { background: var(--viz-series-4); }
+    #recap-workflow .rw-dot.correction { background: var(--viz-series-3); }
+    @media (max-width: 780px) {
+      #recap-workflow .rw-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #recap-workflow .rw-stats { grid-template-columns: 1fr; }
+      #recap-workflow .rw-detail { grid-template-columns: 1fr; }
+      #recap-workflow .rw-canvas { min-height: 360px; }
+      #recap-workflow .rw-dist-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #recap-workflow .rw-binary-row { grid-template-columns: 1fr; }
+      #recap-workflow .rw-sim-config { grid-template-columns: 1fr 1fr; }
+      #recap-workflow .rw-sim-actions { grid-column: 1 / -1; }
+      #recap-workflow .rw-packet { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 430px) {
+      #recap-workflow .rw-controls { grid-template-columns: 1fr; }
+      #recap-workflow .rw-dist-controls { grid-template-columns: 1fr; }
+      #recap-workflow .rw-sim-config { grid-template-columns: 1fr; }
+      #recap-workflow .rw-sim-actions { grid-column: auto; }
+      #recap-workflow .rw-data-tools { grid-template-columns: 1fr; }
+    }
+
+    /* Shared-page workspace: keep the outcome beside the inputs. */
+    #recap-workflow { max-width: 1600px; margin: 0 auto; }
+    #recap-workflow .rw-workbench { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 24px; align-items: start; }
+    #recap-workflow .rw-inputs { min-width: 0; }
+    #recap-workflow .rw-results { position: sticky; top: 12px; min-width: 0; }
+    #recap-workflow .rw-inputs .rw-controls,
+    #recap-workflow .rw-inputs .rw-dist-controls,
+    #recap-workflow .rw-inputs .rw-data-tools { grid-template-columns: 1fr 1fr; gap: 12px; }
+    #recap-workflow .rw-inputs .rw-data-tools &gt; :first-child { grid-column: 1 / -1; }
+    #recap-workflow .rw-inputs .rw-data-tools &gt; :last-child { grid-column: 1 / -1; }
+    #recap-workflow .rw-inputs .rw-flags { display: grid; gap: 8px; }
+    #recap-workflow .rw-inputs .rw-dist-controls &gt; :last-child { grid-column: 1 / -1; }
+    #recap-workflow .rw-results .rw-dist-chart { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    #recap-workflow .rw-results .rw-binary-row { grid-template-columns: 1fr; margin-top: 4px; gap: 6px; }
+    #recap-workflow .rw-results .rw-dist-head { margin-bottom: 4px; }
+    #recap-workflow .rw-results .rw-dist-head .text-muted { display: none; }
+    #recap-workflow .rw-live-context { margin: 0 0 12px; }
+    #recap-workflow .rw-data-section { margin-top: 8px; }
+    #recap-workflow .rw-packet { grid-template-columns: 1fr; }
+    #recap-workflow .rw-packet .card { padding: 10px; }
+    #recap-workflow .rw-data-head { margin-bottom: 6px; }
+    #recap-workflow .rw-data-head .text-muted { display: none; }
+    #recap-workflow .rw-workbench + .rw-sim-config { margin-top: 28px; }
+    #recap-workflow .rw-results .rw-help { margin-top: 12px; }
+    #recap-workflow .rw-results .rw-help p { margin: 8px 0; }
+    #recap-workflow .rw-mobile-plots { display: none; }
+    #recap-workflow .rw-jump { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+    #recap-workflow .rw-jump a { color: var(--foreground); }
+    #recap-workflow .rw-mini-controls { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+    #recap-workflow .rw-selection-note { margin: 6px 0; }
+    #recap-workflow .rw-horizon { margin-bottom: 12px; }
+    #recap-workflow .rw-shape-control { margin-bottom: 12px; }
+    #recap-workflow .rw-theme-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    #recap-workflow .rw-shape-detail { margin: 5px 0; }
+    #recap-workflow .rw-horizon-inputs { display: grid; grid-template-columns: minmax(0, 1fr) 84px; gap: 12px; align-items: center; }
+    @media (min-width: 850px) and (max-width: 1150px) {
+      #recap-workflow .rw-workbench { grid-template-columns: 300px minmax(0, 1fr); gap: 18px; }
+      #recap-workflow .rw-results .rw-dist-chart { grid-template-columns: 1fr; }
+      #recap-workflow .rw-results .rw-dist-chart svg { max-height: 220px; }
+    }
+    @media (max-width: 849px) {
+      #recap-workflow .rw-workbench { display: flex; flex-direction: column; gap: 12px; }
+      #recap-workflow .rw-results { order: -1; top: 0; width: 100%; z-index: 5; background: var(--background); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+      #recap-workflow .rw-inputs { width: 100%; }
+      #recap-workflow .rw-results .rw-dist-head, #recap-workflow .rw-results .rw-help,
+      #recap-workflow .rw-results .rw-binary-row .card:first-child { display: none; }
+      #recap-workflow .rw-results .rw-dist-chart { display: block; }
+      #recap-workflow .rw-results .rw-dist-chart svg { max-height: 210px; }
+      #recap-workflow .rw-results[data-mobile-plot=&quot;value&quot;] #rw-adv-svg,
+      #recap-workflow .rw-results[data-mobile-plot=&quot;advantage&quot;] #rw-value-svg { display: none; }
+      #recap-workflow .rw-mobile-plots { display: flex; gap: 8px; align-items: center; margin-bottom: 4px; }
+      #recap-workflow .rw-results .rw-live-context { margin-bottom: 2px; }
+      #recap-workflow .rw-results .rw-binary-row .card { padding: 5px 8px; }
+      #recap-workflow .rw-results .rw-binary-row { margin-top: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #recap-workflow * { transition: none !important; scroll-behavior: auto !important; }
+    }
+
+  &lt;/style&gt;
+
+  &lt;div class=&quot;rw-head&quot;&gt;
+    &lt;div&gt;
+      &lt;h2&gt;RECAP 交互实验台&lt;/h2&gt;
+      &lt;div class=&quot;text-muted&quot;&gt;调整左侧参数，右侧同步显示价值分布、优势与二值判别。单文件，可离线分享。&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;rw-theme-controls&quot;&gt;
+      &lt;span id=&quot;rw-phase-badge&quot; class=&quot;viz-badge&quot;&gt;当前：真机采集&lt;/span&gt;
+      &lt;button id=&quot;rw-theme-toggle&quot; type=&quot;button&quot; class=&quot;btn&quot; aria-pressed=&quot;false&quot; aria-label=&quot;夜间主题&quot;&gt;切换夜间&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;rw-jump&quot;&gt;&lt;a href=&quot;#rw-workbench&quot;&gt;参数与曲线&lt;/a&gt;&lt;a href=&quot;#rw-sim-progress&quot;&gt;全流程模拟&lt;/a&gt;&lt;/div&gt;
+  &lt;div class=&quot;rw-workbench&quot; id=&quot;rw-workbench&quot;&gt;&lt;div class=&quot;rw-inputs&quot;&gt;&lt;/div&gt;&lt;aside class=&quot;rw-results&quot; data-mobile-plot=&quot;value&quot; aria-label=&quot;实时判别结果&quot;&gt;&lt;/aside&gt;&lt;/div&gt;
+  &lt;div class=&quot;rw-controls&quot; aria-label=&quot;RECAP 参数&quot;&gt;
+    &lt;div class=&quot;rw-control&quot;&gt;
+      &lt;label class=&quot;form-label&quot; for=&quot;rw-source&quot;&gt;采集方式&lt;/label&gt;
+      &lt;select id=&quot;rw-source&quot; class=&quot;form-select&quot;&gt;
+        &lt;option value=&quot;mixed&quot;&gt;自主执行 + 人工接管&lt;/option&gt;
+        &lt;option value=&quot;autonomous&quot;&gt;仅自主执行&lt;/option&gt;
+        &lt;option value=&quot;correction&quot;&gt;以接管纠正为主&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;rw-control&quot;&gt;
+      &lt;div class=&quot;rw-label-row&quot;&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;rw-success&quot;&gt;成功轨迹比例&lt;/label&gt;
+        &lt;span id=&quot;rw-success-value&quot; class=&quot;tabular-nums&quot;&gt;60%&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;input id=&quot;rw-success&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;60&quot; step=&quot;5&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;rw-control&quot;&gt;
+      &lt;div class=&quot;rw-label-row&quot;&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;rw-intervention&quot;&gt;接管轨迹比例&lt;/label&gt;
+        &lt;span id=&quot;rw-intervention-value&quot; class=&quot;tabular-nums&quot;&gt;30%&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;input id=&quot;rw-intervention&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;30&quot; step=&quot;5&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;rw-control&quot;&gt;
+      &lt;div class=&quot;rw-label-row&quot;&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;rw-positive&quot;&gt;优势排名标正比例&lt;/label&gt;
+        &lt;span id=&quot;rw-positive-value&quot; class=&quot;tabular-nums&quot;&gt;40%&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;input id=&quot;rw-positive&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;5&quot; max=&quot;95&quot; value=&quot;40&quot; step=&quot;5&quot;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;rw-flags&quot;&gt;
+    &lt;label class=&quot;form-check form-switch&quot;&gt;
+      &lt;input id=&quot;rw-corrections-positive&quot; class=&quot;form-check-input&quot; type=&quot;checkbox&quot; checked&gt;
+      &lt;span class=&quot;form-check-label&quot;&gt;人工纠正强制标为正优势&lt;/span&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-check form-switch&quot;&gt;
+      &lt;input id=&quot;rw-include-failures&quot; class=&quot;form-check-input&quot; type=&quot;checkbox&quot; checked&gt;
+      &lt;span class=&quot;form-check-label&quot;&gt;保留失败与低优势轨迹&lt;/span&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-check form-switch&quot;&gt;
+      &lt;input id=&quot;rw-repeat&quot; class=&quot;form-check-input&quot; type=&quot;checkbox&quot; checked&gt;
+      &lt;span class=&quot;form-check-label&quot;&gt;完成后进入下一轮采集&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;rw-sim-config&quot; aria-label=&quot;全流程模拟设置&quot;&gt;
+    &lt;div class=&quot;rw-control&quot;&gt;
+      &lt;div class=&quot;rw-label-row&quot;&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;rw-episodes&quot;&gt;每轮新采集轨迹&lt;/label&gt;
+        &lt;span id=&quot;rw-episodes-value&quot; class=&quot;tabular-nums&quot;&gt;100 条&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;input id=&quot;rw-episodes&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;20&quot; max=&quot;500&quot; value=&quot;100&quot; step=&quot;20&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;rw-control&quot;&gt;
+      &lt;div class=&quot;rw-label-row&quot;&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;rw-rounds&quot;&gt;迭代轮数&lt;/label&gt;
+        &lt;span id=&quot;rw-rounds-value&quot; class=&quot;tabular-nums&quot;&gt;3 轮&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;input id=&quot;rw-rounds&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;1&quot; max=&quot;6&quot; value=&quot;3&quot; step=&quot;1&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;rw-sim-actions&quot;&gt;
+      &lt;button id=&quot;rw-run&quot; type=&quot;button&quot; class=&quot;btn btn-primary&quot;&gt;自动模拟&lt;/button&gt;
+      &lt;button id=&quot;rw-reset&quot; type=&quot;button&quot; class=&quot;btn btn-ghost&quot;&gt;重置&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div id=&quot;rw-sim-progress&quot; class=&quot;progress&quot; role=&quot;progressbar&quot; aria-label=&quot;RECAP 全流程模拟进度&quot; aria-valuenow=&quot;0&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot;&gt;
+    &lt;div id=&quot;rw-sim-progress-bar&quot; class=&quot;progress-bar&quot; style=&quot;width:0%&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;rw-sim-status text-small&quot; aria-live=&quot;polite&quot;&gt;
+    &lt;span&gt;&lt;strong id=&quot;rw-round-status&quot;&gt;第 1 / 3 轮&lt;/strong&gt;&lt;/span&gt;
+    &lt;span id=&quot;rw-policy-version&quot;&gt;执行策略 π⁰&lt;/span&gt;
+    &lt;span id=&quot;rw-value-version&quot;&gt;价值模型 V⁰&lt;/span&gt;
+    &lt;span id=&quot;rw-data-status&quot;&gt;已收集 0 条新轨迹&lt;/span&gt;
+    &lt;span id=&quot;rw-label-status&quot;&gt;尚未生成优势标签&lt;/span&gt;
+    &lt;span class=&quot;text-muted&quot;&gt;机制与数据流模拟，不预测真实性能&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;rw-stats&quot; aria-live=&quot;polite&quot;&gt;
+    &lt;div class=&quot;card viz-stat&quot;&gt;
+      &lt;div class=&quot;text-muted&quot;&gt;价值函数监督&lt;/div&gt;
+      &lt;div class=&quot;rw-stat-main&quot;&gt;&lt;span id=&quot;rw-return-mode&quot; class=&quot;viz-stat-value&quot;&gt;混合回报&lt;/span&gt;&lt;/div&gt;
+      &lt;div id=&quot;rw-return-detail&quot; class=&quot;text-small text-muted&quot;&gt;成功：剩余步数；失败：大负回报&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;card viz-stat&quot;&gt;
+      &lt;div class=&quot;text-muted&quot;&gt;策略看到的数据&lt;/div&gt;
+      &lt;div class=&quot;rw-stat-main&quot;&gt;&lt;span id=&quot;rw-policy-data&quot; class=&quot;viz-stat-value tabular-nums&quot;&gt;100%&lt;/span&gt;&lt;/div&gt;
+      &lt;div id=&quot;rw-policy-detail&quot; class=&quot;text-small text-muted&quot;&gt;正负优势都保留，用条件区分&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;card viz-stat&quot;&gt;
+      &lt;div class=&quot;text-muted&quot;&gt;部署条件&lt;/div&gt;
+      &lt;div class=&quot;rw-stat-main&quot;&gt;&lt;span class=&quot;viz-stat-value&quot;&gt;Advantage: positive&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;text-small text-muted&quot;&gt;价值模型主要负责训练标注，不必逐动作在线打分&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;rw-canvas&quot;&gt;
+    &lt;svg id=&quot;rw-svg&quot; viewBox=&quot;0 0 1000 430&quot; role=&quot;img&quot; aria-labelledby=&quot;rw-svg-title rw-svg-desc&quot;&gt;
+      &lt;title id=&quot;rw-svg-title&quot;&gt;RECAP 从真机采集到策略再部署的迭代流程&lt;/title&gt;
+      &lt;desc id=&quot;rw-svg-desc&quot;&gt;流程包含目标任务初始化、真机部署采集、轨迹回报、价值函数、优势标注、策略更新与下一轮部署。&lt;/desc&gt;
+      &lt;defs&gt;
+        &lt;marker id=&quot;rw-arrowhead&quot; markerWidth=&quot;8&quot; markerHeight=&quot;8&quot; refX=&quot;7&quot; refY=&quot;4&quot; orient=&quot;auto&quot;&gt;
+          &lt;path d=&quot;M0,0 L8,4 L0,8 Z&quot; fill=&quot;var(--border)&quot;&gt;&lt;/path&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&quot;rw-arrowhead-active&quot; markerWidth=&quot;8&quot; markerHeight=&quot;8&quot; refX=&quot;7&quot; refY=&quot;4&quot; orient=&quot;auto&quot;&gt;
+          &lt;path d=&quot;M0,0 L8,4 L0,8 Z&quot; fill=&quot;var(--viz-series-1)&quot;&gt;&lt;/path&gt;
+        &lt;/marker&gt;
+      &lt;/defs&gt;
+
+      &lt;text x=&quot;24&quot; y=&quot;44&quot; class=&quot;rw-lane-text&quot;&gt;真机 / 环境&lt;/text&gt;
+      &lt;text x=&quot;24&quot; y=&quot;202&quot; class=&quot;rw-lane-text&quot;&gt;训练服务器&lt;/text&gt;
+      &lt;line x1=&quot;16&quot; y1=&quot;175&quot; x2=&quot;984&quot; y2=&quot;175&quot; stroke=&quot;var(--border)&quot; stroke-width=&quot;1&quot;&gt;&lt;/line&gt;
+
+      &lt;path class=&quot;rw-arrow&quot; d=&quot;M170 96 H218&quot;&gt;&lt;/path&gt;
+      &lt;path class=&quot;rw-arrow&quot; d=&quot;M382 96 H430&quot;&gt;&lt;/path&gt;
+      &lt;path class=&quot;rw-arrow&quot; d=&quot;M512 142 V214&quot;&gt;&lt;/path&gt;
+      &lt;path class=&quot;rw-arrow&quot; d=&quot;M590 275 H635&quot;&gt;&lt;/path&gt;
+      &lt;path class=&quot;rw-arrow&quot; d=&quot;M795 275 H840&quot;&gt;&lt;/path&gt;
+      &lt;path class=&quot;rw-arrow&quot; d=&quot;M920 214 V142&quot;&gt;&lt;/path&gt;
+      &lt;path id=&quot;rw-loop-path&quot; class=&quot;rw-loop&quot; d=&quot;M840 96 C740 22, 350 22, 170 78&quot;&gt;&lt;/path&gt;
+
+      &lt;g data-stage=&quot;0&quot; class=&quot;cursor-interaction&quot; role=&quot;button&quot; aria-label=&quot;阶段一：目标任务初始化&quot;&gt;
+        &lt;rect class=&quot;rw-node robot active&quot; x=&quot;24&quot; y=&quot;58&quot; width=&quot;146&quot; height=&quot;76&quot; rx=&quot;12&quot;&gt;&lt;/rect&gt;
+        &lt;text class=&quot;rw-main-text&quot; x=&quot;97&quot; y=&quot;84&quot;&gt;① 目标任务初始化&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;97&quot; y=&quot;106&quot;&gt;示教 SFT 得到 π⁰&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;97&quot; y=&quot;122&quot;&gt;优势条件设为正&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;g data-stage=&quot;1&quot; class=&quot;cursor-interaction&quot; role=&quot;button&quot; aria-label=&quot;阶段二：真机部署采集&quot;&gt;
+        &lt;rect class=&quot;rw-node robot&quot; x=&quot;218&quot; y=&quot;58&quot; width=&quot;164&quot; height=&quot;76&quot; rx=&quot;12&quot;&gt;&lt;/rect&gt;
+        &lt;text class=&quot;rw-main-text&quot; x=&quot;300&quot; y=&quot;84&quot;&gt;② 真机部署采集&lt;/text&gt;
+        &lt;text id=&quot;rw-collect-line1&quot; class=&quot;rw-sub-text&quot; x=&quot;300&quot; y=&quot;106&quot;&gt;自主执行 + 人工接管&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;300&quot; y=&quot;122&quot;&gt;记录成功 / 失败&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;g data-stage=&quot;2&quot; class=&quot;cursor-interaction&quot; role=&quot;button&quot; aria-label=&quot;阶段三：形成累计轨迹数据集&quot;&gt;
+        &lt;rect class=&quot;rw-node robot&quot; x=&quot;430&quot; y=&quot;58&quot; width=&quot;164&quot; height=&quot;84&quot; rx=&quot;12&quot;&gt;&lt;/rect&gt;
+        &lt;text class=&quot;rw-main-text&quot; x=&quot;512&quot; y=&quot;82&quot;&gt;③ 累计轨迹数据集&lt;/text&gt;
+        &lt;rect class=&quot;rw-data-track&quot; x=&quot;450&quot; y=&quot;96&quot; width=&quot;124&quot; height=&quot;12&quot; rx=&quot;6&quot;&gt;&lt;/rect&gt;
+        &lt;rect id=&quot;rw-success-bar&quot; class=&quot;rw-data-success&quot; x=&quot;450&quot; y=&quot;96&quot; width=&quot;74.4&quot; height=&quot;12&quot; rx=&quot;6&quot;&gt;&lt;/rect&gt;
+        &lt;rect id=&quot;rw-failure-bar&quot; class=&quot;rw-data-failure&quot; x=&quot;524.4&quot; y=&quot;96&quot; width=&quot;49.6&quot; height=&quot;12&quot; rx=&quot;6&quot;&gt;&lt;/rect&gt;
+        &lt;rect id=&quot;rw-correction-bar&quot; class=&quot;rw-data-correction&quot; x=&quot;450&quot; y=&quot;116&quot; width=&quot;37.2&quot; height=&quot;8&quot; rx=&quot;4&quot;&gt;&lt;/rect&gt;
+        &lt;text id=&quot;rw-dataset-caption&quot; class=&quot;rw-sub-text&quot; x=&quot;512&quot; y=&quot;138&quot;&gt;累计当前轮与历史数据&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;g data-stage=&quot;3&quot; class=&quot;cursor-interaction&quot; role=&quot;button&quot; aria-label=&quot;阶段四：训练价值函数&quot;&gt;
+        &lt;rect class=&quot;rw-node rl&quot; x=&quot;430&quot; y=&quot;214&quot; width=&quot;160&quot; height=&quot;122&quot; rx=&quot;12&quot;&gt;&lt;/rect&gt;
+        &lt;text class=&quot;rw-main-text&quot; x=&quot;510&quot; y=&quot;244&quot;&gt;④ 训练价值函数 Vφ&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;510&quot; y=&quot;266&quot;&gt;轨迹回报 → 201 个价值桶&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;510&quot; y=&quot;286&quot;&gt;交叉熵训练分布&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;510&quot; y=&quot;306&quot;&gt;期望得到标量 Vφ&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;510&quot; y=&quot;326&quot;&gt;整批累计数据上更新&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;g data-stage=&quot;4&quot; class=&quot;cursor-interaction&quot; role=&quot;button&quot; aria-label=&quot;阶段五：计算优势并生成条件标签&quot;&gt;
+        &lt;rect class=&quot;rw-node rl&quot; x=&quot;635&quot; y=&quot;214&quot; width=&quot;160&quot; height=&quot;122&quot; rx=&quot;12&quot;&gt;&lt;/rect&gt;
+        &lt;text class=&quot;rw-main-text&quot; x=&quot;715&quot; y=&quot;244&quot;&gt;⑤ 计算 Advantage&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;715&quot; y=&quot;266&quot;&gt;短期奖励 + 未来价值&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;715&quot; y=&quot;286&quot;&gt;− 当前价值&lt;/text&gt;
+        &lt;text id=&quot;rw-positive-label&quot; class=&quot;rw-sub-text&quot; x=&quot;715&quot; y=&quot;306&quot;&gt;前 40% → positive&lt;/text&gt;
+        &lt;text id=&quot;rw-correction-label&quot; class=&quot;rw-sub-text&quot; x=&quot;715&quot; y=&quot;326&quot;&gt;纠正动作强制 positive&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;g data-stage=&quot;5&quot; class=&quot;cursor-interaction&quot; role=&quot;button&quot; aria-label=&quot;阶段六：优势条件策略更新&quot;&gt;
+        &lt;rect class=&quot;rw-node rl&quot; x=&quot;840&quot; y=&quot;214&quot; width=&quot;136&quot; height=&quot;122&quot; rx=&quot;12&quot;&gt;&lt;/rect&gt;
+        &lt;text class=&quot;rw-main-text&quot; x=&quot;908&quot; y=&quot;244&quot;&gt;⑥ 更新策略 πθ&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;908&quot; y=&quot;266&quot;&gt;正负数据均训练&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;908&quot; y=&quot;286&quot;&gt;动作流匹配损失&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;908&quot; y=&quot;306&quot;&gt;部署请求 positive&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;908&quot; y=&quot;326&quot;&gt;可配合 CFG&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;g data-stage=&quot;6&quot; class=&quot;cursor-interaction&quot; role=&quot;button&quot; aria-label=&quot;阶段七：部署改进后的策略&quot;&gt;
+        &lt;rect class=&quot;rw-node robot&quot; x=&quot;840&quot; y=&quot;58&quot; width=&quot;136&quot; height=&quot;84&quot; rx=&quot;12&quot;&gt;&lt;/rect&gt;
+        &lt;text class=&quot;rw-main-text&quot; x=&quot;908&quot; y=&quot;84&quot;&gt;⑦ 部署 π¹&lt;/text&gt;
+        &lt;text class=&quot;rw-sub-text&quot; x=&quot;908&quot; y=&quot;106&quot;&gt;执行高优势模式&lt;/text&gt;
+        &lt;text id=&quot;rw-loop-label&quot; class=&quot;rw-sub-text&quot; x=&quot;908&quot; y=&quot;124&quot;&gt;进入下一轮&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;text x=&quot;610&quot; y=&quot;397&quot; class=&quot;rw-sub-text&quot;&gt;关键：DAgger 提供纠正数据；RECAP 再用自主轨迹回报与优势条件区分动作质量&lt;/text&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;rw-legend text-small&quot; aria-label=&quot;轨迹图例&quot;&gt;
+    &lt;span&gt;&lt;span class=&quot;rw-dot success&quot;&gt;&lt;/span&gt;成功轨迹&lt;/span&gt;
+    &lt;span&gt;&lt;span class=&quot;rw-dot failure&quot;&gt;&lt;/span&gt;失败轨迹&lt;/span&gt;
+    &lt;span&gt;&lt;span class=&quot;rw-dot correction&quot;&gt;&lt;/span&gt;含人工纠正的轨迹&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;section class=&quot;rw-data-section&quot; aria-labelledby=&quot;rw-data-title&quot;&gt;
+    &lt;hr&gt;
+    &lt;div class=&quot;rw-data-head&quot;&gt;
+      &lt;div&gt;
+        &lt;h3 id=&quot;rw-data-title&quot;&gt;轨迹数据内部与判别过程&lt;/h3&gt;
+        &lt;div class=&quot;text-muted&quot;&gt;选一条示例轨迹和一个时刻，逐字段查看原始记录如何变成回报、价值、优势与二值条件&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;span class=&quot;viz-badge&quot;&gt;教学模拟数据&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;rw-data-tools&quot; aria-label=&quot;轨迹数据选择&quot;&gt;
+      &lt;div class=&quot;rw-control&quot;&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;rw-trajectory-type&quot;&gt;示例轨迹&lt;/label&gt;
+        &lt;select id=&quot;rw-trajectory-type&quot; class=&quot;form-select&quot;&gt;
+          &lt;option value=&quot;success&quot;&gt;完整自主成功&lt;/option&gt;
+          &lt;option value=&quot;failure&quot;&gt;自主执行失败&lt;/option&gt;
+          &lt;option value=&quot;correction&quot;&gt;第 60 步人工接管并成功&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;rw-control&quot;&gt;
+        &lt;div class=&quot;rw-label-row&quot;&gt;
+          &lt;label class=&quot;form-label&quot; for=&quot;rw-selected-step&quot;&gt;检查时刻&lt;/label&gt;
+          &lt;span id=&quot;rw-selected-step-label&quot; class=&quot;tabular-nums&quot;&gt;t = 60&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;input id=&quot;rw-selected-step&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;7&quot; value=&quot;4&quot; step=&quot;1&quot;&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;rw-packet&quot;&gt;
+      &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;rw-label-row&quot;&gt;
+          &lt;strong id=&quot;rw-packet-title&quot;&gt;t = 60 的原始样本&lt;/strong&gt;
+          &lt;span id=&quot;rw-controller-badge&quot; class=&quot;viz-badge&quot;&gt;人工控制&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;dl class=&quot;text-small&quot;&gt;
+          &lt;dt&gt;观察 oₜ&lt;/dt&gt;&lt;dd id=&quot;rw-observation-field&quot;&gt;3 路相机图像 + 机器人状态 qₜ&lt;/dd&gt;
+          &lt;dt&gt;任务 ℓ&lt;/dt&gt;&lt;dd&gt;自然语言任务指令与元信息&lt;/dd&gt;
+          &lt;dt&gt;动作片段 aₜ:ₜ₊ₙ₋₁&lt;/dt&gt;&lt;dd id=&quot;rw-action-field&quot;&gt;记录窗口内实际执行的动作&lt;/dd&gt;
+          &lt;dt&gt;终局标签&lt;/dt&gt;&lt;dd id=&quot;rw-outcome-field&quot;&gt;episode success = 1&lt;/dd&gt;
+        &lt;/dl&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;text-muted&quot;&gt;字段生成链&lt;/div&gt;
+        &lt;div id=&quot;rw-data-chain&quot; class=&quot;rw-chain text-small&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+        &lt;div id=&quot;rw-stage-note&quot; class=&quot;text-small text-muted&quot; style=&quot;margin-top:10px&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;rw-data-table-wrap&quot;&gt;
+      &lt;table class=&quot;rw-data-table&quot; aria-describedby=&quot;rw-data-caption&quot;&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;时刻&lt;/th&gt;
+            &lt;th&gt;控制者&lt;/th&gt;
+            &lt;th&gt;终局结果&lt;/th&gt;
+            &lt;th&gt;回报标签 Gₜ&lt;/th&gt;
+            &lt;th&gt;价值期望 Vφ(oₜ)&lt;/th&gt;
+            &lt;th&gt;窗口优势 Aₜ&lt;/th&gt;
+            &lt;th&gt;二值条件 Iₜ&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody id=&quot;rw-data-table-body&quot;&gt;&lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+    &lt;div id=&quot;rw-data-caption&quot; class=&quot;text-small text-muted&quot; style=&quot;margin-top:8px&quot;&gt;数值仅用于展示计算与判别机制，不是论文实验结果。点击任一时刻会把该样本载入右侧分布图。&lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;rw-dist-section&quot; aria-labelledby=&quot;rw-dist-title&quot;&gt;
+    &lt;hr&gt;
+    &lt;div class=&quot;rw-dist-head&quot;&gt;
+      &lt;div&gt;
+        &lt;h3 id=&quot;rw-dist-title&quot;&gt;价值分布与二值化&lt;/h3&gt;
+        &lt;div class=&quot;text-muted&quot;&gt;拖动当前价值、未来价值和短期回报，观察分布期望如何变成 Advantage 条件&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;span class=&quot;viz-badge&quot;&gt;201 个价值桶&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;rw-dist-controls&quot; aria-label=&quot;价值分布参数&quot;&gt;
+      &lt;div class=&quot;rw-shape-control&quot;&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;rw-distribution-shape&quot;&gt;价值分布形状（教学预览）&lt;/label&gt;
+        &lt;select id=&quot;rw-distribution-shape&quot; class=&quot;form-select&quot;&gt;
+          &lt;option value=&quot;normal&quot;&gt;标准单峰（原形状）&lt;/option&gt;
+          &lt;option value=&quot;narrow&quot;&gt;① 窄单峰 · 概率集中&lt;/option&gt;
+          &lt;option value=&quot;wide&quot;&gt;② 宽单峰 · 概率分散&lt;/option&gt;
+          &lt;option value=&quot;left-tail&quot;&gt;③ 左长尾 · 较差回报拖尾&lt;/option&gt;
+          &lt;option value=&quot;right-tail&quot;&gt;④ 右长尾 · 较好回报拖尾&lt;/option&gt;
+          &lt;option value=&quot;bimodal&quot;&gt;⑤ 双峰 · 两类可能结果&lt;/option&gt;
+          &lt;option value=&quot;uniform&quot;&gt;⑥ 均匀 · 区间内等概率&lt;/option&gt;
+        &lt;/select&gt;
+        &lt;div id=&quot;rw-shape-detail&quot; class=&quot;rw-shape-detail text-small text-muted&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;rw-horizon&quot;&gt;
+        &lt;div class=&quot;rw-label-row&quot;&gt;
+          &lt;label class=&quot;form-label&quot; for=&quot;rw-horizon&quot;&gt;优势窗口 N（步）&lt;/label&gt;
+          &lt;span id=&quot;rw-horizon-label&quot; class=&quot;tabular-nums&quot;&gt;50 步&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;rw-horizon-inputs&quot;&gt;
+          &lt;input id=&quot;rw-horizon&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;1&quot; max=&quot;100&quot; value=&quot;50&quot; step=&quot;1&quot;&gt;
+          &lt;input id=&quot;rw-horizon-number&quot; class=&quot;form-control&quot; type=&quot;number&quot; min=&quot;1&quot; max=&quot;100&quot; value=&quot;50&quot; step=&quot;1&quot; aria-label=&quot;手动输入窗口 N&quot;&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;rw-horizon-detail&quot; class=&quot;text-small text-muted&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;rw-control&quot;&gt;
+        &lt;div class=&quot;rw-label-row&quot;&gt;
+          &lt;label class=&quot;form-label&quot; for=&quot;rw-current-value&quot;&gt;当前价值期望&lt;/label&gt;
+          &lt;span id=&quot;rw-current-value-label&quot; class=&quot;tabular-nums&quot;&gt;−0.65&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;input id=&quot;rw-current-value&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;-100&quot; max=&quot;0&quot; value=&quot;-65&quot; step=&quot;1&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;rw-control&quot;&gt;
+        &lt;div class=&quot;rw-label-row&quot;&gt;
+          &lt;label class=&quot;form-label&quot; for=&quot;rw-future-value&quot;&gt;窗口末状态价值&lt;/label&gt;
+          &lt;span id=&quot;rw-future-value-label&quot; class=&quot;tabular-nums&quot;&gt;−0.42&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;input id=&quot;rw-future-value&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;-100&quot; max=&quot;0&quot; value=&quot;-42&quot; step=&quot;1&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;rw-control&quot;&gt;
+        &lt;div class=&quot;rw-label-row&quot;&gt;
+          &lt;label class=&quot;form-label&quot; for=&quot;rw-short-reward&quot;&gt;窗口累计回报&lt;/label&gt;
+          &lt;span id=&quot;rw-short-reward-label&quot; class=&quot;tabular-nums&quot;&gt;−0.10&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;input id=&quot;rw-short-reward&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;-100&quot; max=&quot;0&quot; value=&quot;-10&quot; step=&quot;1&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;rw-control&quot;&gt;
+        &lt;div class=&quot;rw-label-row&quot;&gt;
+          &lt;label class=&quot;form-label&quot; for=&quot;rw-uncertainty&quot;&gt;形状尺度&lt;/label&gt;
+          &lt;span id=&quot;rw-uncertainty-label&quot; class=&quot;tabular-nums&quot;&gt;0.09&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;input id=&quot;rw-uncertainty&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;3&quot; max=&quot;22&quot; value=&quot;9&quot; step=&quot;1&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;rw-control&quot;&gt;
+        &lt;label class=&quot;form-label&quot; for=&quot;rw-sample-type&quot;&gt;当前样本来源&lt;/label&gt;
+        &lt;select id=&quot;rw-sample-type&quot; class=&quot;form-select&quot;&gt;
+          &lt;option value=&quot;autonomous&quot;&gt;自主动作片段&lt;/option&gt;
+          &lt;option value=&quot;correction&quot;&gt;人工纠正片段&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;rw-dist-chart&quot;&gt;
+      &lt;svg id=&quot;rw-value-svg&quot; viewBox=&quot;28 0 470 300&quot; role=&quot;img&quot; aria-labelledby=&quot;rw-dist-svg-title rw-dist-svg-desc&quot;&gt;
+        &lt;title id=&quot;rw-dist-svg-title&quot;&gt;价值分布回归与 Advantage 二值化&lt;/title&gt;
+        &lt;desc id=&quot;rw-dist-svg-desc&quot;&gt;左图显示当前与未来状态的分类价值分布，右图显示样本 Advantage、阈值及最终二值条件。&lt;/desc&gt;
+
+        &lt;text x=&quot;56&quot; y=&quot;22&quot; class=&quot;rw-chart-label&quot;&gt;A. 分布式价值回归：pφ(V｜o, ℓ)&lt;/text&gt;
+        &lt;rect data-chart-frame class=&quot;rw-chart-frame&quot; x=&quot;56&quot; y=&quot;40&quot; width=&quot;414&quot; height=&quot;190&quot;&gt;&lt;/rect&gt;
+        &lt;line class=&quot;rw-gridline&quot; x1=&quot;56&quot; y1=&quot;135&quot; x2=&quot;470&quot; y2=&quot;135&quot;&gt;&lt;/line&gt;
+        &lt;path id=&quot;rw-current-path&quot; class=&quot;rw-value-current&quot; d=&quot;&quot;&gt;&lt;/path&gt;
+        &lt;path id=&quot;rw-future-path&quot; class=&quot;rw-value-future&quot; d=&quot;&quot;&gt;&lt;/path&gt;
+        &lt;line id=&quot;rw-current-mean&quot; class=&quot;rw-sample-marker&quot; x1=&quot;0&quot; y1=&quot;40&quot; x2=&quot;0&quot; y2=&quot;230&quot;&gt;&lt;/line&gt;
+        &lt;line id=&quot;rw-future-mean&quot; class=&quot;rw-sample-marker&quot; x1=&quot;0&quot; y1=&quot;40&quot; x2=&quot;0&quot; y2=&quot;230&quot; opacity=&quot;.45&quot;&gt;&lt;/line&gt;
+        &lt;text id=&quot;rw-current-series-label&quot; class=&quot;rw-chart-label&quot; x=&quot;0&quot; y=&quot;78&quot; text-anchor=&quot;middle&quot;&gt;当前 Vₜ&lt;/text&gt;
+        &lt;text id=&quot;rw-future-series-label&quot; class=&quot;rw-chart-label&quot; x=&quot;0&quot; y=&quot;96&quot; text-anchor=&quot;middle&quot;&gt;未来 Vₜ₊ₙ&lt;/text&gt;
+        &lt;text x=&quot;56&quot; y=&quot;252&quot; class=&quot;rw-chart-muted&quot;&gt;−1.0&lt;/text&gt;
+        &lt;text x=&quot;263&quot; y=&quot;252&quot; class=&quot;rw-chart-muted&quot; text-anchor=&quot;middle&quot;&gt;归一化价值 V&lt;/text&gt;
+        &lt;text x=&quot;470&quot; y=&quot;252&quot; class=&quot;rw-chart-muted&quot; text-anchor=&quot;end&quot;&gt;0（成功）&lt;/text&gt;
+        &lt;text id=&quot;rw-probability-scale&quot; x=&quot;64&quot; y=&quot;60&quot; class=&quot;rw-chart-muted&quot;&gt;每桶概率&lt;/text&gt;
+        &lt;text id=&quot;rw-value-expectation&quot; x=&quot;263&quot; y=&quot;282&quot; class=&quot;rw-chart-label&quot; text-anchor=&quot;middle&quot;&gt;分布期望：Vt = −0.65，Vt+50 = −0.42&lt;/text&gt;
+
+      &lt;/svg&gt;
+      &lt;svg id=&quot;rw-adv-svg&quot; viewBox=&quot;12 0 470 300&quot; role=&quot;img&quot; aria-label=&quot;优势与阈值二值化&quot;&gt;&lt;g transform=&quot;translate(-500 0)&quot;&gt;
+        &lt;text x=&quot;540&quot; y=&quot;22&quot; class=&quot;rw-chart-label&quot;&gt;B. Advantage 分布 → 阈值二值化&lt;/text&gt;
+        &lt;rect data-chart-frame class=&quot;rw-chart-frame&quot; x=&quot;540&quot; y=&quot;40&quot; width=&quot;414&quot; height=&quot;190&quot;&gt;&lt;/rect&gt;
+        &lt;line class=&quot;rw-gridline&quot; x1=&quot;540&quot; y1=&quot;135&quot; x2=&quot;954&quot; y2=&quot;135&quot;&gt;&lt;/line&gt;
+        &lt;path id=&quot;rw-adv-path&quot; class=&quot;rw-adv-area&quot; d=&quot;&quot;&gt;&lt;/path&gt;
+        &lt;line id=&quot;rw-threshold-line&quot; class=&quot;rw-threshold&quot; x1=&quot;0&quot; y1=&quot;40&quot; x2=&quot;0&quot; y2=&quot;230&quot;&gt;&lt;/line&gt;
+        &lt;line id=&quot;rw-adv-marker&quot; class=&quot;rw-sample-marker&quot; x1=&quot;0&quot; y1=&quot;40&quot; x2=&quot;0&quot; y2=&quot;230&quot;&gt;&lt;/line&gt;
+        &lt;text id=&quot;rw-threshold-text&quot; class=&quot;rw-chart-label&quot; x=&quot;0&quot; y=&quot;60&quot; text-anchor=&quot;start&quot;&gt;ε = 0.17&lt;/text&gt;
+        &lt;text id=&quot;rw-adv-text&quot; class=&quot;rw-chart-label&quot; x=&quot;0&quot; y=&quot;220&quot; text-anchor=&quot;middle&quot;&gt;A = 0.13&lt;/text&gt;
+        &lt;text x=&quot;540&quot; y=&quot;252&quot; class=&quot;rw-chart-muted&quot;&gt;−1.0&lt;/text&gt;
+        &lt;text x=&quot;747&quot; y=&quot;252&quot; class=&quot;rw-chart-muted&quot; text-anchor=&quot;middle&quot;&gt;样本 Advantage&lt;/text&gt;
+        &lt;text x=&quot;954&quot; y=&quot;252&quot; class=&quot;rw-chart-muted&quot; text-anchor=&quot;end&quot;&gt;+1.0&lt;/text&gt;
+        &lt;text x=&quot;548&quot; y=&quot;60&quot; class=&quot;rw-chart-muted&quot;&gt;样本密度&lt;/text&gt;
+        &lt;text id=&quot;rw-binary-caption&quot; x=&quot;747&quot; y=&quot;282&quot; class=&quot;rw-chart-label&quot; text-anchor=&quot;middle&quot;&gt;A &amp;lt; ε → Advantage: negative&lt;/text&gt;
+      &lt;/g&gt;&lt;/svg&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;rw-binary-row&quot; aria-live=&quot;polite&quot;&gt;
+      &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;text-muted&quot;&gt;当前样本的优势计算&lt;/div&gt;
+        &lt;div class=&quot;rw-formula-line&quot;&gt;
+          &lt;strong&gt;Aₜ = Rₜ:ₜ₊ₙ + V(oₜ₊ₙ) − V(oₜ)&lt;/strong&gt;
+          &lt;span id=&quot;rw-formula-values&quot; class=&quot;tabular-nums&quot;&gt;= −0.10 − 0.42 + 0.65 = +0.13&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;card rw-binary-value&quot;&gt;
+        &lt;div&gt;
+          &lt;div class=&quot;text-muted&quot;&gt;二值条件 Iₜ&lt;/div&gt;
+          &lt;div id=&quot;rw-binary-reason&quot; class=&quot;text-small text-muted&quot;&gt;当前样本低于阈值&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;span id=&quot;rw-binary-badge&quot; class=&quot;viz-badge&quot;&gt;negative · 0&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;div class=&quot;rw-detail&quot;&gt;
+    &lt;div class=&quot;card&quot; aria-live=&quot;polite&quot;&gt;
+      &lt;div id=&quot;rw-detail-title&quot; class=&quot;rw-detail-title&quot;&gt;① 目标任务初始化&lt;/div&gt;
+      &lt;div id=&quot;rw-detail-text&quot; class=&quot;text-muted&quot;&gt;用目标任务示教数据做监督微调，得到第一版采集策略；这一阶段还没有使用新采集的自主经验。&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;rw-actions&quot;&gt;
+      &lt;button id=&quot;rw-prev&quot; type=&quot;button&quot; class=&quot;btn btn-ghost&quot;&gt;上一步&lt;/button&gt;
+      &lt;button id=&quot;rw-next&quot; type=&quot;button&quot; class=&quot;btn btn-primary&quot;&gt;下一步&lt;/button&gt;
+      &lt;button id=&quot;rw-explain&quot; type=&quot;button&quot; class=&quot;btn&quot;&gt;解释当前设置&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    (() =&gt; {
+      const root = document.getElementById(&#x27;recap-workflow&#x27;);
+      if (!root || root.dataset.ready === &#x27;1&#x27;) return;
+      root.dataset.ready = &#x27;1&#x27;;
+
+      const $ = (s) =&gt; root.querySelector(s);
+      const $$ = (s) =&gt; Array.from(root.querySelectorAll(s));
+
+      // Reuse the same controls and plots in a compact, linked workspace.
+      const inputs = $(&#x27;.rw-inputs&#x27;), results = $(&#x27;.rw-results&#x27;);
+      inputs.append($(&#x27;.rw-data-tools&#x27;), $(&#x27;.rw-shape-control&#x27;), $(&#x27;.rw-horizon&#x27;), $(&#x27;.rw-dist-controls&#x27;), $(&#x27;.rw-controls&#x27;), $(&#x27;.rw-flags&#x27;));
+      $(&#x27;#rw-workbench&#x27;).after($(&#x27;.rw-data-section&#x27;));
+      results.append($(&#x27;.rw-dist-head&#x27;));
+      const mobileTabs = document.createElement(&#x27;div&#x27;);
+      mobileTabs.className = &#x27;rw-mobile-plots&#x27;;
+      mobileTabs.innerHTML = &#x27;&lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; data-plot=&quot;value&quot; aria-pressed=&quot;true&quot;&gt;价值分布&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; data-plot=&quot;advantage&quot; aria-pressed=&quot;false&quot;&gt;优势判别&lt;/button&gt;&#x27;;
+      results.append(mobileTabs);
+      const context = document.createElement(&#x27;div&#x27;);
+      context.id = &#x27;rw-live-context&#x27;; context.className = &#x27;rw-live-context text-small&#x27;; context.setAttribute(&#x27;aria-live&#x27;,&#x27;polite&#x27;);
+      results.append(context, $(&#x27;.rw-dist-chart&#x27;), $(&#x27;.rw-binary-row&#x27;));
+      const sampleTools = document.createElement(&#x27;div&#x27;);
+      sampleTools.className = &#x27;rw-mini-controls&#x27;;
+      sampleTools.innerHTML = &#x27;&lt;button type=&quot;button&quot; id=&quot;rw-reload-sample&quot; class=&quot;btn btn-ghost&quot;&gt;恢复所选样本&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;rw-explain-local&quot; class=&quot;btn btn-ghost&quot;&gt;解释当前判别&lt;/button&gt;&#x27;;
+      inputs.querySelector(&#x27;.rw-dist-controls&#x27;).after(sampleTools);
+      const help = document.createElement(&#x27;details&#x27;);
+      help.className = &#x27;rw-help&#x27;; help.id = &#x27;rw-local-help&#x27;;
+      help.innerHTML = &#x27;&lt;summary&gt;当前判别与模拟说明&lt;/summary&gt;&lt;p id=&quot;rw-local-explanation&quot; class=&quot;text-small&quot;&gt;&lt;/p&gt;&lt;p class=&quot;text-small text-muted&quot;&gt;这里的曲线、价值预测及优势参考分布为教学设定，不是训练所得。阈值由示意正态分布的分位数计算；真实实验应使用任务数据中的优势分布。终局成功标签与局部优势条件含义不同。&lt;/p&gt;&#x27;;
+      results.append(help);
+      $(&#x27;.rw-dist-section&#x27;).remove();
+      $(&#x27;#rw-explain&#x27;).remove();
+      $$(&#x27;.rw-mobile-plots button&#x27;).forEach(button =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
+        results.dataset.mobilePlot = button.dataset.plot;
+        $$(&#x27;.rw-mobile-plots button&#x27;).forEach(b =&gt; b.setAttribute(&#x27;aria-pressed&#x27;, String(b === button)));
+      }));
+
+      const defaults = {
+        source: &#x27;mixed&#x27;, success: 60, intervention: 30, positive: 40,
+        correctionsPositive: true, includeFailures: true, repeat: true, stage: 4,
+        currentValue: -65, futureValue: -42, shortReward: -10,
+        uncertainty: 9, sampleType: &#x27;autonomous&#x27;,
+        episodes: 100, rounds: 3, simRound: 1,
+        trajectoryType: &#x27;correction&#x27;, selectedStep: 4, sampleEdited: false, horizon: 50,
+        distributionShape: &#x27;normal&#x27;, theme: &#x27;dark&#x27;
+      };
+      let saved = {};
+      try {
+        saved = (window.openai &amp;&amp; window.openai.widgetState &amp;&amp; window.openai.widgetState.modelContent) || {};
+      } catch (_) {}
+      let state = { ...defaults, ...(saved &amp;&amp; saved.recapWorkflow ? saved.recapWorkflow : {}) };
+      let simulationTimer = null;
+
+      const stageDetails = [
+        [&#x27;① 目标任务初始化&#x27;, &#x27;用目标任务示教数据做监督微调，得到第一版采集策略；这一阶段还没有使用新采集的自主经验。&#x27;],
+        [&#x27;② 真机部署采集&#x27;, &#x27;策略在真机上自主执行，记录整段观察、动作和终局成功标签；可由专家在关键时刻接管纠正。&#x27;],
+        [&#x27;③ 累计轨迹数据集&#x27;, &#x27;把自主成功、失败和接管轨迹与历史数据合并。这里是 DAgger 式数据聚合与自主经验进入同一数据池的位置。&#x27;],
+        [&#x27;④ 训练价值函数&#x27;, &#x27;根据完整轨迹回报训练分布式价值函数：成功轨迹对应剩余完成步数，失败轨迹得到显著更低的回报。&#x27;],
+        [&#x27;⑤ 计算 Advantage&#x27;, &#x27;用短期奖励、未来价值与当前价值计算动作片段的优势，并按阈值转换为 positive / negative 条件。&#x27;],
+        [&#x27;⑥ 更新动作策略&#x27;, &#x27;在同一动作生成模型中同时学习正、负优势数据；条件告诉模型动作属于哪种质量，而不是简单删除所有负样本。&#x27;],
+        [&#x27;⑦ 部署改进策略&#x27;, &#x27;部署时请求 “Advantage: positive” 来生成高优势动作。若继续迭代，再收集下一轮自主执行与接管经验。&#x27;]
+      ];
+
+      const sampleTimes = [0, 15, 30, 45, 60, 75, 90, 100];
+      const trajectorySpecs = {
+        success: {
+          label: &#x27;完整自主成功&#x27;, outcome: &#x27;success = 1&#x27;, terminal: &#x27;成功&#x27;,
+          values: [-0.96, -0.82, -0.72, -0.52, -0.45, -0.28, -0.12, 0]
+        },
+        failure: {
+          label: &#x27;自主执行失败&#x27;, outcome: &#x27;success = 0&#x27;, terminal: &#x27;失败&#x27;,
+          values: [-0.75, -0.70, -0.68, -0.72, -0.80, -0.88, -0.94, -1]
+        },
+        correction: {
+          label: &#x27;第 60 步人工接管并成功&#x27;, outcome: &#x27;success = 1&#x27;, terminal: &#x27;成功&#x27;,
+          values: [-0.86, -0.74, -0.63, -0.60, -0.66, -0.45, -0.18, 0]
+        }
+      };
+
+      function clampState() {
+        state.success = Math.max(0, Math.min(100, Number(state.success) || 0));
+        state.intervention = Math.max(0, Math.min(100, Number(state.intervention) || 0));
+        state.positive = Math.max(5, Math.min(95, Number(state.positive) || 40));
+        state.stage = Math.max(0, Math.min(6, Number(state.stage) || 0));
+        state.currentValue = Math.max(-100, Math.min(0, Number(state.currentValue)));
+        state.futureValue = Math.max(-100, Math.min(0, Number(state.futureValue)));
+        state.shortReward = Math.max(-100, Math.min(0, Number(state.shortReward)));
+        state.uncertainty = Math.max(3, Math.min(22, Number(state.uncertainty) || 9));
+        state.sampleType = state.sampleType === &#x27;correction&#x27; ? &#x27;correction&#x27; : &#x27;autonomous&#x27;;
+        state.trajectoryType = [&#x27;success&#x27;, &#x27;failure&#x27;, &#x27;correction&#x27;].includes(state.trajectoryType) ? state.trajectoryType : &#x27;correction&#x27;;
+        state.selectedStep = Math.max(0, Math.min(sampleTimes.length - 1, Number(state.selectedStep) || 0));
+        state.horizon = Math.max(1, Math.min(100, Math.round(Number(state.horizon) || 50)));
+        state.distributionShape = [&#x27;normal&#x27;, &#x27;narrow&#x27;, &#x27;wide&#x27;, &#x27;left-tail&#x27;, &#x27;right-tail&#x27;, &#x27;bimodal&#x27;, &#x27;uniform&#x27;].includes(state.distributionShape) ? state.distributionShape : &#x27;normal&#x27;;
+        state.theme = state.theme === &#x27;light&#x27; ? &#x27;light&#x27; : &#x27;dark&#x27;;
+        state.episodes = Math.max(20, Math.min(500, Number(state.episodes) || 100));
+        state.rounds = Math.max(1, Math.min(6, Number(state.rounds) || 3));
+        state.simRound = Math.max(1, Math.min(state.rounds, Number(state.simRound) || 1));
+        if (state.source === &#x27;autonomous&#x27;) state.intervention = 0;
+        if (state.source === &#x27;correction&#x27; &amp;&amp; state.intervention &lt; 50) state.intervention = 50;
+      }
+
+      function fmt(value) {
+        const n = Number(value);
+        const sign = n &gt; 0 ? &#x27;+&#x27; : n &lt; 0 ? &#x27;−&#x27; : &#x27;&#x27;;
+        return sign + Math.abs(n).toFixed(2);
+      }
+
+      function erf(x) {
+        const sign = x &lt; 0 ? -1 : 1;
+        const a = Math.abs(x);
+        const t = 1 / (1 + 0.3275911 * a);
+        const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-a * a);
+        return sign * y;
+      }
+
+      function normalCdf(x) {
+        return 0.5 * (1 + erf(x / Math.sqrt(2)));
+      }
+
+      function normalQuantile(p) {
+        let lo = -4.5;
+        let hi = 4.5;
+        for (let i = 0; i &lt; 42; i += 1) {
+          const mid = (lo + hi) / 2;
+          if (normalCdf(mid) &lt; p) lo = mid;
+          else hi = mid;
+        }
+        return (lo + hi) / 2;
+      }
+
+      const shapeProfiles = new Map();
+      function valueDistribution(targetMean, scale, shape) {
+        const bins = Array.from({ length: 201 }, (_, i) =&gt; -1 + i / 200);
+        const probabilities = Array(201).fill(0);
+        const target = Math.max(-1, Math.min(0, targetMean));
+        if (target === -1 || target === 0) {
+          probabilities[target === -1 ? 0 : 200] = 1;
+        } else {
+          if (!shapeProfiles.has(shape)) {
+            const gaussian = (u, center, width) =&gt; Math.exp(-0.5 * ((u - center) / width) ** 2);
+            const samples = Array.from({ length: 2001 }, (_, i) =&gt; {
+              const u = -1 + i / 1000;
+              let weight;
+              switch (shape) {
+                case &#x27;narrow&#x27;: weight = gaussian(u, 0, 0.12); break;
+                case &#x27;wide&#x27;: weight = gaussian(u, 0, 0.60); break;
+                case &#x27;left-tail&#x27;: weight = Math.exp(u &lt; 0 ? u / 0.50 : -u / 0.16); break;
+                case &#x27;right-tail&#x27;: weight = Math.exp(u &lt; 0 ? u / 0.16 : -u / 0.50); break;
+                case &#x27;bimodal&#x27;: weight = gaussian(u, -0.50, 0.12) + gaussian(u, 0.50, 0.12); break;
+                case &#x27;uniform&#x27;: weight = 1; break;
+                default: weight = gaussian(u, 0, 0.30);
+              }
+              return { u, weight };
+            });
+            const sum = samples.reduce((total, item) =&gt; total + item.weight, 0);
+            samples.forEach(item =&gt; { item.weight /= sum; });
+            const mean = samples.reduce((total, item) =&gt; total + item.u * item.weight, 0);
+            shapeProfiles.set(shape, { samples, mean });
+          }
+          const profile = shapeProfiles.get(shape);
+          // Center each shape at the requested expectation and compress its
+          // support only when necessary to stay within [-1, 0]. Splitting mass
+          // between adjacent bins preserves both normalization and first moment.
+          const stretch = Math.min(scale / 0.30,
+            (target + 1) / (1 + profile.mean), -target / (1 - profile.mean));
+          profile.samples.forEach(({ u, weight }) =&gt; {
+            const value = target + stretch * (u - profile.mean);
+            const position = Math.max(0, Math.min(200, (value + 1) * 200));
+            const lower = Math.floor(position), upper = Math.min(200, lower + 1);
+            const fraction = position - lower;
+            probabilities[lower] += weight * (1 - fraction);
+            probabilities[upper] += weight * fraction;
+          });
+        }
+        const sum = probabilities.reduce((a, b) =&gt; a + b, 0);
+        probabilities.forEach((p, i) =&gt; { probabilities[i] = p / sum; });
+        const mean = probabilities.reduce((total, p, i) =&gt; total + p * bins[i], 0);
+        const variance = probabilities.reduce((total, p, i) =&gt; total + p * (bins[i] - mean) ** 2, 0);
+        return { bins, probabilities, mean, standardDeviation: Math.sqrt(variance), peak: Math.max(...probabilities) };
+      }
+
+      function probabilityPath(distribution, ceiling) {
+        const points = distribution.bins.map((value, i) =&gt; {
+          const x = 56 + (value + 1) * 414;
+          const y = 230 - distribution.probabilities[i] / ceiling * 159.6;
+          return `${x.toFixed(3)} ${y.toFixed(3)}`;
+        });
+        return &#x27;M 56 230 L &#x27; + points.join(&#x27; L &#x27;) + &#x27; L 470 230 Z&#x27;;
+      }
+
+      function densityPath(mean, sigma, xMin, xMax, left, right, top, bottom) {
+        const points = [];
+        const steps = 160;
+        for (let i = 0; i &lt;= steps; i += 1) {
+          const value = xMin + (xMax - xMin) * i / steps;
+          const density = Math.exp(-0.5 * Math.pow((value - mean) / sigma, 2));
+          const x = left + (right - left) * (value - xMin) / (xMax - xMin);
+          const y = bottom - density * (bottom - top) * 0.84;
+          points.push([x, y]);
+        }
+        return `M ${left} ${bottom} L ` + points.map((p) =&gt; `${p[0].toFixed(2)} ${p[1].toFixed(2)}`).join(&#x27; L &#x27;) + ` L ${right} ${bottom} Z`;
+      }
+
+      function scaleX(value, min, max, left, right) {
+        const clipped = Math.max(min, Math.min(max, value));
+        return left + (right - left) * (clipped - min) / (max - min);
+      }
+
+      function trajectoryRows(type) {
+        const spec = trajectorySpecs[type];
+        return sampleTimes.map((time, index) =&gt; {
+          const futureTime = Math.min(100, time + state.horizon);
+          const j = sampleTimes.findIndex((candidate) =&gt; candidate &gt;= futureTime);
+          const lo = Math.max(0, j - 1);
+          const weight = j === lo ? 0 : (futureTime - sampleTimes[lo]) / (sampleTimes[j] - sampleTimes[lo]);
+          const controller = type === &#x27;correction&#x27; &amp;&amp; time &gt;= 60 ? &#x27;人工&#x27; : &#x27;机器人&#x27;;
+          const returnTarget = type === &#x27;failure&#x27; ? -1 : -(100 - time) / 100;
+          let shortReward = -(futureTime - time) / 100;
+          if (type === &#x27;failure&#x27; &amp;&amp; futureTime === 100 &amp;&amp; time &lt; 100) shortReward = -1;
+          const currentValue = spec.values[index];
+          // Interpolate the synthetic value anchors at the exact t+N endpoint.
+          // On a failed terminal transition the penalty is in the reward already,
+          // so use zero bootstrap rather than counting the penalty twice.
+          const futureValue = type === &#x27;failure&#x27; &amp;&amp; futureTime === 100 ? 0
+            : Math.round((spec.values[lo] + weight * (spec.values[j] - spec.values[lo])) * 100) / 100;
+          const advantage = shortReward + futureValue - currentValue;
+          const threshold = 0.22 * normalQuantile(1 - state.positive / 100);
+          const forced = controller === &#x27;人工&#x27; &amp;&amp; state.correctionsPositive;
+          const positive = forced || advantage &gt;= threshold;
+          return { time, futureTime, controller, returnTarget, shortReward, currentValue, futureValue, advantage, threshold, forced, positive };
+        });
+      }
+
+      function loadSelectedDataSample(index) {
+        state.selectedStep = Math.max(0, Math.min(sampleTimes.length - 1, Number(index) || 0));
+        const row = trajectoryRows(state.trajectoryType)[state.selectedStep];
+        state.currentValue = Math.round(row.currentValue * 100);
+        state.futureValue = Math.round(row.futureValue * 100);
+        state.shortReward = Math.round(row.shortReward * 100);
+        state.sampleType = row.controller === &#x27;人工&#x27; ? &#x27;correction&#x27; : &#x27;autonomous&#x27;;
+        state.sampleEdited = false;
+      }
+
+      function renderDataMicroscope() {
+        const spec = trajectorySpecs[state.trajectoryType];
+        const rows = trajectoryRows(state.trajectoryType);
+        const selected = rows[state.selectedStep];
+        const hasRaw = state.stage &gt;= 1;
+        const hasReturn = state.stage &gt;= 2;
+        const hasValue = state.stage &gt;= 3;
+        const hasDecision = state.stage &gt;= 4;
+        const stageNotes = [
+          &#x27;初始化阶段：尚未采集新轨迹。&#x27;,
+          &#x27;采集阶段：只记录观察、实际动作、控制者与整段是否成功。&#x27;,
+          &#x27;数据聚合后：由终局成功标签为各时刻生成归一化回报 Gₜ。&#x27;,
+          &#x27;价值训练后：模型输出 201 桶概率分布，取期望得到 Vφ(oₜ)。&#x27;,
+          &#x27;优势计算后：用短期回报和前后价值求 Aₜ，再按阈值二值化。&#x27;,
+          &#x27;策略更新阶段：Iₜ 作为条件，与动作片段一起监督动作策略。&#x27;,
+          &#x27;部署阶段：请求 positive 条件生成动作；表中标签来自上一轮训练。&#x27;
+        ];
+        const chain = [
+          [&#x27;原始轨迹&#x27;, hasRaw], [&#x27;回报 Gₜ&#x27;, hasReturn], [&#x27;分布 pφ(V)&#x27;, hasValue],
+          [&#x27;期望 Vφ&#x27;, hasValue], [&#x27;优势 Aₜ&#x27;, hasDecision], [&#x27;条件 Iₜ&#x27;, hasDecision]
+        ];
+        $(&#x27;#rw-trajectory-type&#x27;).value = state.trajectoryType;
+        $(&#x27;#rw-selected-step&#x27;).value = state.selectedStep;
+        $(&#x27;#rw-selected-step-label&#x27;).textContent = `t = ${selected.time}`;
+        $(&#x27;#rw-packet-title&#x27;).textContent = `t = ${selected.time} 的原始样本`;
+        $(&#x27;#rw-controller-badge&#x27;).textContent = selected.controller === &#x27;人工&#x27; ? &#x27;人工控制&#x27; : &#x27;机器人控制&#x27;;
+        $(&#x27;#rw-observation-field&#x27;).textContent = hasRaw ? &#x27;3 路相机图像 + 机器人状态 qₜ&#x27; : &#x27;待真机采集&#x27;;
+        $(&#x27;#rw-action-field&#x27;).textContent = hasRaw ? `动作窗口 t=${selected.time} → ${selected.futureTime}；记录实际执行动作` : &#x27;待真机采集&#x27;;
+        $(&#x27;#rw-outcome-field&#x27;).textContent = hasRaw ? `episode ${spec.outcome}` : &#x27;待 episode 结束&#x27;;
+        $(&#x27;#rw-data-chain&#x27;).innerHTML = chain.map((item, i) =&gt; {
+          const step = `&lt;span class=&quot;rw-chain-step${item[1] ? &#x27; ready&#x27; : &#x27;&#x27;}&quot;&gt;${item[1] ? item[0] : item[0] + &#x27; · 待生成&#x27;}&lt;/span&gt;`;
+          return i &lt; chain.length - 1 ? step + &#x27;&lt;span class=&quot;rw-chain-arrow&quot;&gt;→&lt;/span&gt;&#x27; : step;
+        }).join(&#x27;&#x27;);
+        $(&#x27;#rw-stage-note&#x27;).textContent = stageNotes[state.stage];
+
+        $(&#x27;#rw-data-table-body&#x27;).innerHTML = rows.map((row, index) =&gt; {
+          const selectedClass = index === state.selectedStep ? &#x27; class=&quot;rw-selected-row&quot;&#x27; : &#x27;&#x27;;
+          const controller = hasRaw ? row.controller : &#x27;—&#x27;;
+          const terminal = hasRaw ? spec.terminal : &#x27;—&#x27;;
+          const returnText = hasReturn ? fmt(row.returnTarget) : &#x27;待生成&#x27;;
+          const valueText = hasValue ? fmt(row.currentValue) : &#x27;待训练&#x27;;
+          const advantageText = hasDecision ? fmt(row.advantage) : &#x27;待计算&#x27;;
+          const binaryText = row.time === 100 ? &#x27;终点，无动作片段&#x27; : hasDecision ? `${row.positive ? &#x27;positive · 1&#x27; : &#x27;negative · 0&#x27;}${row.forced ? &#x27;（纠正覆盖）&#x27; : &#x27;&#x27;}` : &#x27;待判别&#x27;;
+          const binaryClass = hasDecision ? (row.positive ? &#x27;rw-cell-positive&#x27; : &#x27;rw-cell-negative&#x27;) : &#x27;rw-cell-pending&#x27;;
+          return `&lt;tr${selectedClass}&gt;
+            &lt;td&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-ghost rw-step-button&quot; data-sample-index=&quot;${index}&quot; aria-pressed=&quot;${index === state.selectedStep}&quot;&gt;t=${row.time}&lt;/button&gt;&lt;/td&gt;
+            &lt;td&gt;${controller}&lt;/td&gt;&lt;td&gt;${terminal}&lt;/td&gt;
+            &lt;td class=&quot;${hasReturn ? &#x27;&#x27; : &#x27;rw-cell-pending&#x27;} tabular-nums&quot;&gt;${returnText}&lt;/td&gt;
+            &lt;td class=&quot;${hasValue ? &#x27;&#x27; : &#x27;rw-cell-pending&#x27;} tabular-nums&quot;&gt;${valueText}&lt;/td&gt;
+            &lt;td class=&quot;${hasDecision ? &#x27;&#x27; : &#x27;rw-cell-pending&#x27;} tabular-nums&quot;&gt;${row.time === 100 ? &#x27;—&#x27; : advantageText}&lt;/td&gt;
+            &lt;td class=&quot;${binaryClass}&quot;&gt;${binaryText}&lt;/td&gt;
+          &lt;/tr&gt;`;
+        }).join(&#x27;&#x27;);
+      }
+
+      function persist() {
+        if (!window.openai || !window.openai.setWidgetState) return;
+        window.openai.setWidgetState({
+          modelContent: { recapWorkflow: state },
+          privateContent: { selectedStage: state.stage }
+        }).catch(() =&gt; {});
+      }
+
+      function render() {
+        clampState();
+        if (document.documentElement.dataset.recapTheme !== state.theme) {
+          document.documentElement.dataset.recapTheme = state.theme;
+          window.parent.postMessage({ type: &#x27;recap-theme&#x27;, theme: state.theme }, &#x27;*&#x27;);
+        }
+        $(&#x27;#rw-theme-toggle&#x27;).textContent = state.theme === &#x27;dark&#x27; ? &#x27;切换日间&#x27; : &#x27;切换夜间&#x27;;
+        $(&#x27;#rw-theme-toggle&#x27;).setAttribute(&#x27;aria-pressed&#x27;, String(state.theme === &#x27;dark&#x27;));
+        $(&#x27;#rw-distribution-shape&#x27;).value = state.distributionShape;
+        const selectedTime = sampleTimes[state.selectedStep];
+        const endpoint = Math.min(100, selectedTime + state.horizon);
+        const effectiveN = endpoint - selectedTime;
+        $(&#x27;#rw-horizon&#x27;).value = state.horizon;
+        $(&#x27;#rw-horizon-number&#x27;).value = state.horizon;
+        $(&#x27;#rw-horizon-label&#x27;).textContent = `${state.horizon} 步`;
+        $(&#x27;#rw-horizon-detail&#x27;).textContent = `t=${selectedTime} → ${endpoint}，实际 n=${effectiveN}` + (effectiveN &lt; state.horizon ? &#x27;（到达轨迹终点，截短窗口）&#x27; : &#x27;&#x27;) + &#x27;。调整 N 会重新载入样本数值。&#x27;;
+        $(&#x27;#rw-source&#x27;).value = state.source;
+        $(&#x27;#rw-success&#x27;).value = state.success;
+        $(&#x27;#rw-intervention&#x27;).value = state.intervention;
+        $(&#x27;#rw-positive&#x27;).value = state.positive;
+        $(&#x27;#rw-corrections-positive&#x27;).checked = !!state.correctionsPositive;
+        $(&#x27;#rw-include-failures&#x27;).checked = !!state.includeFailures;
+        $(&#x27;#rw-repeat&#x27;).checked = !!state.repeat;
+        $(&#x27;#rw-success-value&#x27;).textContent = state.success + &#x27;%&#x27;;
+        $(&#x27;#rw-intervention-value&#x27;).textContent = state.intervention + &#x27;%&#x27;;
+        $(&#x27;#rw-positive-value&#x27;).textContent = state.positive + &#x27;%&#x27;;
+        $(&#x27;#rw-episodes&#x27;).value = state.episodes;
+        $(&#x27;#rw-rounds&#x27;).value = state.rounds;
+        $(&#x27;#rw-episodes-value&#x27;).textContent = state.episodes + &#x27; 条&#x27;;
+        $(&#x27;#rw-rounds-value&#x27;).textContent = state.rounds + &#x27; 轮&#x27;;
+
+        const currentRoundCollected = state.stage &gt;= 2 ? 1 : 0;
+        const collectedRounds = Math.max(0, state.simRound - 1 + currentRoundCollected);
+        const collectedEpisodes = collectedRounds * state.episodes;
+        const successfulEpisodes = Math.round(collectedEpisodes * state.success / 100);
+        const correctedEpisodes = Math.round(collectedEpisodes * state.intervention / 100);
+        const retainedFailures = state.includeFailures ? Math.max(0, collectedEpisodes - successfulEpisodes) : 0;
+        const policyVersion = Math.max(0, state.simRound - 1 + (state.stage &gt;= 6 ? 1 : 0));
+        const valueVersion = Math.max(0, state.simRound - 1 + (state.stage &gt;= 4 ? 1 : 0));
+        const totalSimSteps = state.rounds * 6;
+        const completedSimSteps = Math.min(totalSimSteps, (state.simRound - 1) * 6 + Math.max(0, state.stage));
+        const progress = Math.round(100 * completedSimSteps / totalSimSteps);
+        $(&#x27;#rw-round-status&#x27;).textContent = `第 ${state.simRound} / ${state.rounds} 轮`;
+        $(&#x27;#rw-policy-version&#x27;).textContent = `执行策略 π${policyVersion === 0 ? &#x27;⁰&#x27; : &#x27;^&#x27; + policyVersion}`;
+        $(&#x27;#rw-value-version&#x27;).textContent = `价值模型 V${valueVersion === 0 ? &#x27;⁰&#x27; : &#x27;^&#x27; + valueVersion}`;
+        $(&#x27;#rw-data-status&#x27;).textContent = state.stage === 1
+          ? `正在采集本轮 ${state.episodes} 条轨迹`
+          : `累计 ${collectedEpisodes} 条：成功 ${successfulEpisodes}，纠正 ${correctedEpisodes}，保留失败 ${retainedFailures}`;
+        $(&#x27;#rw-label-status&#x27;).textContent = state.stage &gt;= 5
+          ? `本轮前 ${state.positive}% 标正${state.correctionsPositive ? &#x27;；纠正片段另强制为正&#x27; : &#x27;&#x27;}`
+          : &#x27;本轮优势标签尚未生成&#x27;;
+        $(&#x27;#rw-sim-progress&#x27;).setAttribute(&#x27;aria-valuenow&#x27;, progress);
+        $(&#x27;#rw-sim-progress-bar&#x27;).style.width = progress + &#x27;%&#x27;;
+        $(&#x27;#rw-run&#x27;).textContent = simulationTimer ? &#x27;暂停模拟&#x27; : (state.stage === 6 &amp;&amp; state.simRound === state.rounds ? &#x27;重新模拟&#x27; : &#x27;自动模拟&#x27;);
+
+        const sourceLabel = state.source === &#x27;autonomous&#x27; ? &#x27;仅自主执行&#x27; : state.source === &#x27;correction&#x27; ? &#x27;以人工接管为主&#x27; : &#x27;自主执行 + 人工接管&#x27;;
+        $(&#x27;#rw-collect-line1&#x27;).textContent = sourceLabel;
+        const total = 124;
+        const successW = total * state.success / 100;
+        const failureW = state.includeFailures ? total - successW : 0;
+        $(&#x27;#rw-success-bar&#x27;).setAttribute(&#x27;width&#x27;, successW);
+        $(&#x27;#rw-failure-bar&#x27;).setAttribute(&#x27;x&#x27;, 450 + successW);
+        $(&#x27;#rw-failure-bar&#x27;).setAttribute(&#x27;width&#x27;, failureW);
+        $(&#x27;#rw-failure-bar&#x27;).style.display = state.includeFailures ? &#x27;&#x27; : &#x27;none&#x27;;
+        $(&#x27;#rw-correction-bar&#x27;).setAttribute(&#x27;width&#x27;, total * state.intervention / 100);
+        $(&#x27;#rw-correction-bar&#x27;).style.display = state.intervention &gt; 0 ? &#x27;&#x27; : &#x27;none&#x27;;
+        $(&#x27;#rw-dataset-caption&#x27;).textContent = state.includeFailures ? &#x27;成功、失败与历史数据累计&#x27; : &#x27;失败轨迹不进入策略训练&#x27;;
+        $(&#x27;#rw-positive-label&#x27;).textContent = &#x27;前 &#x27; + state.positive + &#x27;% → positive&#x27;;
+        $(&#x27;#rw-correction-label&#x27;).textContent = state.correctionsPositive ? &#x27;纠正动作强制 positive&#x27; : &#x27;纠正动作按价值评估&#x27;;
+        $(&#x27;#rw-loop-label&#x27;).textContent = state.repeat ? &#x27;进入下一轮&#x27; : &#x27;结束并评估&#x27;;
+        $(&#x27;#rw-loop-path&#x27;).style.display = state.repeat ? &#x27;&#x27; : &#x27;none&#x27;;
+
+        const retained = state.includeFailures ? 100 : state.success;
+        $(&#x27;#rw-policy-data&#x27;).textContent = retained + &#x27;%&#x27;;
+        $(&#x27;#rw-policy-detail&#x27;).textContent = state.includeFailures ? &#x27;正负优势都保留，用条件区分&#x27; : &#x27;仅保留成功轨迹，难分离 RECAP 与筛选收益&#x27;;
+        $(&#x27;#rw-return-mode&#x27;).textContent = state.success === 100 ? &#x27;成功回报&#x27; : state.success === 0 ? &#x27;失败回报&#x27; : &#x27;混合回报&#x27;;
+        $(&#x27;#rw-return-detail&#x27;).textContent = state.success === 100 ? &#x27;主要学习完成速度，缺少失败对比&#x27; : state.success === 0 ? &#x27;只有失败信号，缺少成功目标&#x27; : &#x27;成功：剩余步数；失败：大负回报&#x27;;
+
+        renderDataMicroscope();
+
+        $(&#x27;#rw-current-value&#x27;).value = state.currentValue;
+        $(&#x27;#rw-future-value&#x27;).value = state.futureValue;
+        $(&#x27;#rw-short-reward&#x27;).value = state.shortReward;
+        $(&#x27;#rw-uncertainty&#x27;).value = state.uncertainty;
+        $(&#x27;#rw-sample-type&#x27;).value = state.sampleType;
+        const currentDistribution = valueDistribution(state.currentValue / 100, state.uncertainty / 100, state.distributionShape);
+        const futureDistribution = valueDistribution(state.futureValue / 100, state.uncertainty / 100, state.distributionShape);
+        const currentV = currentDistribution.mean;
+        const futureV = futureDistribution.mean;
+        const shortR = state.shortReward / 100;
+        const sigma = state.uncertainty / 100;
+        const advantage = shortR + futureV - currentV;
+        const advantageSigma = 0.22;
+        const threshold = advantageSigma * normalQuantile(1 - state.positive / 100);
+        const forcedPositive = state.sampleType === &#x27;correction&#x27; &amp;&amp; state.correctionsPositive;
+        const binaryPositive = forcedPositive || advantage &gt;= threshold - 1e-12;
+
+        $(&#x27;#rw-current-value-label&#x27;).textContent = fmt(currentV);
+        $(&#x27;#rw-future-value-label&#x27;).textContent = fmt(futureV);
+        $(&#x27;#rw-short-reward-label&#x27;).textContent = fmt(shortR);
+        $(&#x27;#rw-uncertainty-label&#x27;).textContent = sigma.toFixed(2);
+        const terminalFuture = endpoint === 100 &amp;&amp; Math.abs(futureV) &lt; 1e-12;
+        const probabilityCeiling = Math.max(currentDistribution.peak, terminalFuture ? 0 : futureDistribution.peak);
+        $(&#x27;#rw-current-path&#x27;).setAttribute(&#x27;d&#x27;, probabilityPath(currentDistribution, probabilityCeiling));
+        $(&#x27;#rw-future-path&#x27;).setAttribute(&#x27;d&#x27;, probabilityPath(futureDistribution, probabilityCeiling));
+        $(&#x27;#rw-future-path&#x27;).style.display = terminalFuture ? &#x27;none&#x27; : &#x27;&#x27;;
+        $(&#x27;#rw-probability-scale&#x27;).textContent = `桶概率 · 峰高 ${(probabilityCeiling * 100).toFixed(1)}%`;
+        const shapeDescriptions = {
+          normal: &#x27;标准单峰&#x27;, narrow: &#x27;窄单峰&#x27;, wide: &#x27;宽单峰&#x27;,
+          &#x27;left-tail&#x27;: &#x27;左侧较差回报有长尾&#x27;, &#x27;right-tail&#x27;: &#x27;右侧较好回报有长尾&#x27;,
+          bimodal: &#x27;概率集中在两个峰&#x27;, uniform: &#x27;有限区间内近似均匀&#x27;
+        };
+        $(&#x27;#rw-shape-detail&#x27;).textContent = shapeDescriptions[state.distributionShape] +
+          `；当前实际标准差 ${currentDistribution.standardDeviation.toFixed(3)}。保持期望比较形状，靠近边界时压缩分布。`;
+        $(&#x27;#rw-current-path&#x27;).setAttribute(&#x27;aria-label&#x27;, `当前分布：概率和 1，期望 ${fmt(currentV)}`);
+        $(&#x27;#rw-future-path&#x27;).setAttribute(&#x27;aria-label&#x27;, `未来分布：概率和 1，期望 ${fmt(futureV)}`);
+        const currentX = scaleX(currentV, -1, 0, 56, 470);
+        const futureX = scaleX(futureV, -1, 0, 56, 470);
+        $(&#x27;#rw-current-mean&#x27;).setAttribute(&#x27;x1&#x27;, currentX);
+        $(&#x27;#rw-current-mean&#x27;).setAttribute(&#x27;x2&#x27;, currentX);
+        $(&#x27;#rw-future-mean&#x27;).setAttribute(&#x27;x1&#x27;, futureX);
+        $(&#x27;#rw-future-mean&#x27;).setAttribute(&#x27;x2&#x27;, futureX);
+        $(&#x27;#rw-current-series-label&#x27;).setAttribute(&#x27;x&#x27;, Math.max(96, Math.min(430, currentX)));
+        $(&#x27;#rw-future-series-label&#x27;).setAttribute(&#x27;x&#x27;, Math.max(96, Math.min(430, futureX)));
+        $(&#x27;#rw-value-expectation&#x27;).textContent = `Σpₖzₖ：当前 ${fmt(currentV)}，未来 ${fmt(futureV)}`;
+        $(&#x27;#rw-future-series-label&#x27;).textContent = terminalFuture ? &#x27;终止态 V=0&#x27; : `未来 V(${endpoint})`;
+
+        $(&#x27;#rw-adv-path&#x27;).setAttribute(&#x27;d&#x27;, densityPath(0, advantageSigma, -1, 1, 540, 954, 40, 230));
+        const thresholdX = scaleX(threshold, -1, 1, 540, 954);
+        const advantageX = scaleX(advantage, -1, 1, 540, 954);
+        $(&#x27;#rw-threshold-line&#x27;).setAttribute(&#x27;x1&#x27;, thresholdX);
+        $(&#x27;#rw-threshold-line&#x27;).setAttribute(&#x27;x2&#x27;, thresholdX);
+        $(&#x27;#rw-adv-marker&#x27;).setAttribute(&#x27;x1&#x27;, advantageX);
+        $(&#x27;#rw-adv-marker&#x27;).setAttribute(&#x27;x2&#x27;, advantageX);
+        $(&#x27;#rw-threshold-text&#x27;).setAttribute(&#x27;x&#x27;, Math.min(905, thresholdX + 8));
+        $(&#x27;#rw-threshold-text&#x27;).textContent = `ε = ${fmt(threshold)}`;
+        $(&#x27;#rw-adv-text&#x27;).setAttribute(&#x27;x&#x27;, advantageX);
+        $(&#x27;#rw-adv-text&#x27;).textContent = `A = ${fmt(advantage)}`;
+        $(&#x27;#rw-binary-caption&#x27;).textContent = forcedPositive
+          ? &#x27;人工纠正覆盖阈值 → Advantage: positive&#x27;
+          : `A ${advantage &gt;= threshold ? &#x27;≥&#x27; : &#x27;&lt;&#x27;} ε → Advantage: ${binaryPositive ? &#x27;positive&#x27; : &#x27;negative&#x27;}`;
+        $(&#x27;#rw-formula-values&#x27;).textContent = `= ${fmt(shortR)} + (${fmt(futureV)}) − (${fmt(currentV)}) = ${fmt(advantage)}`;
+        $(&#x27;#rw-binary-badge&#x27;).textContent = binaryPositive ? &#x27;positive · 1&#x27; : &#x27;negative · 0&#x27;;
+        $(&#x27;#rw-binary-reason&#x27;).textContent = forcedPositive
+          ? &#x27;人工纠正按 RECAP 规则强制为正&#x27;
+          : `当前样本${advantage &gt;= threshold ? &#x27;达到&#x27; : &#x27;低于&#x27;}阈值 ${fmt(threshold)}`;
+
+        $$(&#x27;[data-stage]&#x27;).forEach((g) =&gt; {
+          const active = Number(g.dataset.stage) === state.stage;
+          g.querySelector(&#x27;.rw-node&#x27;).classList.toggle(&#x27;active&#x27;, active);
+          g.setAttribute(&#x27;aria-pressed&#x27;, active ? &#x27;true&#x27; : &#x27;false&#x27;);
+        });
+        $(&#x27;#rw-phase-badge&#x27;).textContent = &#x27;当前：&#x27; + stageDetails[state.stage][0].replace(/^\S+\s/, &#x27;&#x27;);
+        $(&#x27;#rw-detail-title&#x27;).textContent = stageDetails[state.stage][0];
+        $(&#x27;#rw-detail-text&#x27;).textContent = stageDetails[state.stage][1];
+        $(&#x27;#rw-live-context&#x27;).textContent = trajectorySpecs[state.trajectoryType].label + ` · t=${selectedTime} · N=${state.horizon} / n=${effectiveN}` + (state.sampleEdited ? &#x27; · 手动试算（表内原样本不变）&#x27; : &#x27; · 所选样本&#x27;);
+        $(&#x27;#rw-local-explanation&#x27;).textContent = &#x27;当前窗口优势 A=&#x27; + fmt(advantage) + &#x27;，阈值 ε=&#x27; + fmt(threshold) + &#x27;。&#x27; + (forcedPositive ? &#x27;这段来自人工纠正，强制标为 positive（1）。&#x27; : &#x27;按优势阈值判定为 &#x27; + (binaryPositive ? &#x27;positive（1）。&#x27; : &#x27;negative（0）。&#x27;)) + &#x27; 排名标正比例为 &#x27; + state.positive + &#x27;%，人工纠正可额外增加正标签。&#x27; + (state.sampleEdited ? &#x27;你正在手动试算；点击“恢复所选样本”可与表格重新对齐。&#x27; : &#x27;&#x27;);
+        $(&#x27;#rw-local-explanation&#x27;).textContent += ` 指定 N=${state.horizon}，本段实际 n=${effectiveN}；未来价值由示例锚点线性插值得到，终止后不再自举。`;
+        $(&#x27;#rw-local-explanation&#x27;).textContent += &#x27; 形状预览采用 201 桶离散概率，概率总和为 1，显示价值由 Σpₖzₖ 实际求得。切换形状时保持所设期望，因此只改变形状不会改变优势标签；尺度是构造参数，不是实际标准差。终止态只标 V=0，不绘制价值曲线。&#x27;;
+        if (effectiveN === 0) {
+          $(&#x27;#rw-binary-badge&#x27;).textContent = &#x27;终点 · 不判别&#x27;;
+          $(&#x27;#rw-binary-reason&#x27;).textContent = &#x27;已无后续动作片段&#x27;;
+          $(&#x27;#rw-binary-caption&#x27;).textContent = &#x27;终点：不生成动作优势标签&#x27;;
+          $(&#x27;#rw-formula-values&#x27;).textContent = &#x27;终点无动作窗口，不计算 A&#x27;;
+          $(&#x27;#rw-local-explanation&#x27;).textContent = &#x27;当前已在轨迹终点，实际窗口 n=0，不计算动作优势或生成二值条件。&#x27;;
+        }
+        const finalSimulationState = state.stage === 6 &amp;&amp; (!state.repeat || state.simRound &gt;= state.rounds);
+        $(&#x27;#rw-prev&#x27;).disabled = state.stage === 0 &amp;&amp; state.simRound === 1;
+        $(&#x27;#rw-next&#x27;).disabled = finalSimulationState;
+        $(&#x27;#rw-next&#x27;).textContent = finalSimulationState ? &#x27;模拟完成&#x27; : state.stage === 6 ? &#x27;下一轮采集&#x27; : &#x27;下一步&#x27;;
+      }
+
+      function bindRange(id, key) {
+        $(id).addEventListener(&#x27;input&#x27;, (e) =&gt; {
+          state[key] = Number(e.target.value);
+          if ([&#x27;currentValue&#x27;,&#x27;futureValue&#x27;,&#x27;shortReward&#x27;,&#x27;uncertainty&#x27;].includes(key)) state.sampleEdited = true;
+          render();
+          persist();
+        });
+      }
+
+      function stopSimulation() {
+        if (simulationTimer) {
+          clearInterval(simulationTimer);
+          simulationTimer = null;
+        }
+        render();
+      }
+
+      function resetSimulation() {
+        stopSimulation();
+        state.simRound = 1;
+        state.stage = 0;
+        render();
+        persist();
+      }
+
+      function advanceSimulation() {
+        if (state.stage &lt; 6) {
+          state.stage += 1;
+        } else if (state.repeat &amp;&amp; state.simRound &lt; state.rounds) {
+          state.simRound += 1;
+          state.stage = 1;
+        } else {
+          stopSimulation();
+          persist();
+          return;
+        }
+        render();
+        persist();
+      }
+
+      function retreatSimulation() {
+        stopSimulation();
+        if (state.stage &gt; 1) {
+          state.stage -= 1;
+        } else if (state.simRound &gt; 1) {
+          state.simRound -= 1;
+          state.stage = 6;
+        } else {
+          state.stage = 0;
+        }
+        render();
+        persist();
+      }
+
+      bindRange(&#x27;#rw-success&#x27;, &#x27;success&#x27;);
+      bindRange(&#x27;#rw-intervention&#x27;, &#x27;intervention&#x27;);
+      bindRange(&#x27;#rw-positive&#x27;, &#x27;positive&#x27;);
+      bindRange(&#x27;#rw-current-value&#x27;, &#x27;currentValue&#x27;);
+      bindRange(&#x27;#rw-future-value&#x27;, &#x27;futureValue&#x27;);
+      bindRange(&#x27;#rw-short-reward&#x27;, &#x27;shortReward&#x27;);
+      bindRange(&#x27;#rw-uncertainty&#x27;, &#x27;uncertainty&#x27;);
+      bindRange(&#x27;#rw-episodes&#x27;, &#x27;episodes&#x27;);
+      bindRange(&#x27;#rw-rounds&#x27;, &#x27;rounds&#x27;);
+      $(&#x27;#rw-distribution-shape&#x27;).addEventListener(&#x27;change&#x27;, (event) =&gt; {
+        state.distributionShape = event.target.value;
+        render();
+        persist();
+      });
+      $(&#x27;#rw-theme-toggle&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        state.theme = state.theme === &#x27;dark&#x27; ? &#x27;light&#x27; : &#x27;dark&#x27;;
+        render();
+        persist();
+      });
+      function updateHorizon(event) {
+        const value = Number(event.target.value);
+        if (event.target.value === &#x27;&#x27; || !Number.isFinite(value)) return;
+        state.horizon = Math.max(1, Math.min(100, Math.round(value)));
+        loadSelectedDataSample(state.selectedStep);
+        render();
+        persist();
+      }
+      $(&#x27;#rw-horizon&#x27;).addEventListener(&#x27;input&#x27;, updateHorizon);
+      $(&#x27;#rw-horizon-number&#x27;).addEventListener(&#x27;input&#x27;, (event) =&gt; {
+        const value = Number(event.target.value);
+        if (Number.isInteger(value) &amp;&amp; value &gt;= 1 &amp;&amp; value &lt;= 100) updateHorizon(event);
+      });
+      $(&#x27;#rw-horizon-number&#x27;).addEventListener(&#x27;change&#x27;, updateHorizon);
+      $(&#x27;#rw-source&#x27;).addEventListener(&#x27;change&#x27;, (e) =&gt; { state.source = e.target.value; render(); persist(); });
+      $(&#x27;#rw-trajectory-type&#x27;).addEventListener(&#x27;change&#x27;, (e) =&gt; {
+        state.trajectoryType = e.target.value;
+        loadSelectedDataSample(state.selectedStep);
+        render();
+        persist();
+      });
+      $(&#x27;#rw-selected-step&#x27;).addEventListener(&#x27;input&#x27;, (e) =&gt; {
+        loadSelectedDataSample(Number(e.target.value));
+        render();
+        persist();
+      });
+      $(&#x27;#rw-data-table-body&#x27;).addEventListener(&#x27;click&#x27;, (e) =&gt; {
+        const button = e.target.closest(&#x27;[data-sample-index]&#x27;);
+        if (!button) return;
+        loadSelectedDataSample(Number(button.dataset.sampleIndex));
+        render();
+        persist();
+        $(&#x27;#rw-workbench&#x27;).scrollIntoView({ block: &#x27;start&#x27; });
+      });
+      $(&#x27;#rw-sample-type&#x27;).addEventListener(&#x27;change&#x27;, (e) =&gt; { state.sampleType = e.target.value; state.sampleEdited = true; render(); persist(); });
+      $(&#x27;#rw-corrections-positive&#x27;).addEventListener(&#x27;change&#x27;, (e) =&gt; { state.correctionsPositive = e.target.checked; render(); persist(); });
+      $(&#x27;#rw-include-failures&#x27;).addEventListener(&#x27;change&#x27;, (e) =&gt; { state.includeFailures = e.target.checked; render(); persist(); });
+      $(&#x27;#rw-repeat&#x27;).addEventListener(&#x27;change&#x27;, (e) =&gt; { state.repeat = e.target.checked; render(); persist(); });
+      $$(&#x27;[data-stage]&#x27;).forEach((g) =&gt; g.addEventListener(&#x27;click&#x27;, () =&gt; { stopSimulation(); state.stage = Number(g.dataset.stage); render(); persist(); }));
+      $(&#x27;#rw-prev&#x27;).addEventListener(&#x27;click&#x27;, retreatSimulation);
+      $(&#x27;#rw-next&#x27;).addEventListener(&#x27;click&#x27;, advanceSimulation);
+      $(&#x27;#rw-reset&#x27;).addEventListener(&#x27;click&#x27;, resetSimulation);
+      $(&#x27;#rw-run&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        if (simulationTimer) {
+          stopSimulation();
+          return;
+        }
+        if (state.stage === 6 &amp;&amp; (state.simRound === state.rounds || !state.repeat)) {
+          state.simRound = 1;
+          state.stage = 0;
+        }
+        simulationTimer = setInterval(advanceSimulation, 900);
+        render();
+      });
+      $(&#x27;#rw-explain-local&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; { $(&#x27;#rw-local-help&#x27;).open = !$(&#x27;#rw-local-help&#x27;).open; });
+      $(&#x27;#rw-reload-sample&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; { loadSelectedDataSample(state.selectedStep); render(); persist(); });
+
+      window.addEventListener(&#x27;openai:set_globals&#x27;, (event) =&gt; {
+        const incoming = event.detail &amp;&amp; event.detail.globals &amp;&amp; event.detail.globals.widgetState;
+        if (incoming &amp;&amp; incoming.modelContent &amp;&amp; incoming.modelContent.recapWorkflow) {
+          state = { ...defaults, ...incoming.modelContent.recapWorkflow };
+          clampState();
+          if (!state.sampleEdited) loadSelectedDataSample(state.selectedStep);
+          render();
+        }
+      });
+      clampState();
+      if (!state.sampleEdited) loadSelectedDataSample(state.selectedStep);
+      render();
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+  let lastPointerWasTouch = false;
+  let pinnedByTouch = false;
+
+  const getTrigger = (event) =&gt; {
+    for (const target of event.composedPath()) {
+      if (target?.nodeType === Node.ELEMENT_NODE) {
+        const trigger = target.closest(&quot;[data-tooltip]&quot;);
+        if (trigger) return trigger;
+      }
+    }
+    return null;
+  };
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    pinnedByTouch = false;
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handlePointer = (event) =&gt; {
+    lastPointerWasTouch =
+      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
+  };
+  const handleTouchClick = (event) =&gt; {
+    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
+    lastPointerWasTouch = false;
+    if (!isTouch || event.detail === 0) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (
+      trigger == null ||
+      !trigger.isConnected ||
+      getContent(trigger).length === 0 ||
+      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
+    ) {
+      if (pinnedByTouch) {
+        closeTooltip();
+      }
+      return;
+    }
+    openTooltip(trigger);
+    pinnedByTouch = activeTrigger === trigger;
+    window.setTimeout(() =&gt; {
+      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
+        closeTooltip(false);
+      }
+    }, 0);
+  };
+  const handleLeave = (event) =&gt; {
+    if (pinnedByTouch) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    lastPointerWasTouch = false;
+    const trigger = getTrigger(event);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handlers = {
+    pointerover: handlePointerOpen,
+    pointerdown: handlePointer,
+    pointercancel: handlePointer,
+    click: handleTouchClick,
+    pointerout: handleLeave,
+    focusin: handleFocusIn,
+    focusout: handleLeave,
+    keydown: handleKeyDown,
+    contextmenu: handleContextMenu,
+  };
+  const roots = new Map();
+  const handledEvents = new WeakSet();
+  const handleEvent = (event) =&gt; {
+    if (handledEvents.has(event)) return;
+    handledEvents.add(event);
+    handlers[event.type](event);
+  };
+  const discoverRoots = (node) =&gt; {
+    if (node.shadowRoot) listen(node.shadowRoot);
+    for (const element of node.querySelectorAll(&quot;*&quot;)) {
+      if (element.shadowRoot) listen(element.shadowRoot);
+    }
+  };
+  const listen = (root) =&gt; {
+    if (roots.has(root)) return;
+    for (const type of Object.keys(handlers)) root.addEventListener(type, handleEvent);
+    const observer = new window.MutationObserver((records) =&gt; {
+      for (const { addedNodes } of records) {
+        for (const node of addedNodes) {
+          if (node.nodeType === Node.ELEMENT_NODE) discoverRoots(node);
+        }
+      }
+      for (const [root, cleanup] of roots) {
+        if (root.host &amp;&amp; !root.host.isConnected) {
+          cleanup();
+          roots.delete(root);
+        }
+      }
+      if (activeTrigger &amp;&amp; !activeTrigger.isConnected) closeTooltip(false);
+    });
+    observer.observe(root, { childList: true, subtree: true });
+    roots.set(root, () =&gt; {
+      observer.disconnect();
+      for (const type of Object.keys(handlers)) root.removeEventListener(type, handleEvent);
+    });
+    discoverRoots(root);
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    lastPointerWasTouch = false;
+    for (const cleanup of roots.values()) cleanup();
+    roots.clear();
+    tooltip = null;
+  };
+
+  // Events between children of one shadow root never reach the document.
+  listen(document);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-tabs&quot;&gt;
+(() =&gt; {
+  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
+  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
+  const selectTab = (selected) =&gt; {
+    const panelId = selected.getAttribute(&quot;aria-controls&quot;);
+    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
+      const active = tab === selected;
+      tab.classList.toggle(&quot;active&quot;, active);
+      tab.setAttribute(&quot;aria-selected&quot;, String(active));
+      const id = tab.getAttribute(&quot;aria-controls&quot;);
+      const panel = id &amp;&amp; document.getElementById(id);
+      if (panel != null) {
+        panel.hidden = id !== panelId;
+        if (!panel.hidden &amp;&amp; selected.id) {
+          panel.setAttribute(&quot;aria-labelledby&quot;, selected.id);
+        }
+      }
+    }
+  };
+  const interact = (event) =&gt; {
+    const tab = event.target?.closest?.(selector);
+    if (event.defaultPrevented || tab == null || tab.matches(disabled)) {
+      return;
+    }
+    if (event.type === &quot;click&quot;) {
+      selectTab(tab);
+      return;
+    }
+    const tabs = Array.from(
+      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
+    ).filter((candidate) =&gt; !candidate.matches(disabled));
+    const current = tabs.indexOf(tab);
+    let next;
+    if (event.key === &quot;ArrowRight&quot; || event.key === &quot;ArrowDown&quot;) {
+      next = (current + 1) % tabs.length;
+    } else if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowUp&quot;) {
+      next = (current + tabs.length - 1) % tabs.length;
+    } else if (event.key === &quot;Home&quot;) {
+      next = 0;
+    } else if (event.key === &quot;End&quot;) {
+      next = tabs.length - 1;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    tabs[next].focus();
+    selectTab(tabs[next]);
+  };
+
+  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
+    const selected =
+      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
+    if (selected != null) {
+      selectTab(selected);
+    }
+  }
+  document.addEventListener(&quot;click&quot;, interact);
+  document.addEventListener(&quot;keydown&quot;, interact);
+  window.addEventListener(&quot;pagehide&quot;, () =&gt; {
+    document.removeEventListener(&quot;click&quot;, interact);
+    document.removeEventListener(&quot;keydown&quot;, interact);
+  }, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+<script>(() => {
+  const frame = document.getElementById("codex-visualization");
+  if (!(frame instanceof HTMLIFrameElement)) {
+    return;
+  }
+  let viewportHeight = globalThis.innerHeight;
+  const storageKey = `codex:visualization-widget-state-v2:${JSON.stringify([
+    globalThis.location.pathname,
+    globalThis.location.search,
+  ])}`;
+  const parseState = (serializedState) => {
+    if (
+      typeof serializedState !== "string" ||
+      new TextEncoder().encode(serializedState).length > 16 * 1024
+    ) {
+      throw new TypeError(
+        "Widget state must be a JSON object of at most 16 KiB",
+      );
+    }
+    /** @type {unknown} */
+    const state = JSON.parse(serializedState);
+    if (
+      state == null ||
+      typeof state !== "object" ||
+      Array.isArray(state) ||
+      ("imageIds" in state &&
+        (!Array.isArray(state.imageIds) || state.imageIds.length > 0))
+    ) {
+      throw new TypeError("Widget state must be a JSON object");
+    }
+    const storedState = { modelContent: null, privateContent: null, ...state };
+    const canonicalState = JSON.stringify(
+      storedState,
+      (_key, /** @type {unknown} */ value) => {
+        if (typeof value === "number" && !Number.isFinite(value)) {
+          throw new TypeError("Widget state must contain finite numbers");
+        }
+        return value;
+      },
+    );
+    if (new TextEncoder().encode(canonicalState).length > 16 * 1024) {
+      throw new TypeError(
+        "Widget state must be a JSON object of at most 16 KiB",
+      );
+    }
+    return storedState;
+  };
+  let storage = null;
+  let state = null;
+  try {
+    const localStorage = globalThis.localStorage;
+    const probeKey = `${storageKey}:probe`;
+    localStorage.setItem(probeKey, "1");
+    localStorage.removeItem(probeKey);
+    storage = localStorage;
+    const savedState = storage.getItem(storageKey);
+    if (savedState != null) {
+      try {
+        state = parseState(savedState);
+      } catch {
+        // Invalid saved state does not disable future writes.
+      }
+    }
+  } catch {
+    storage = null;
+  }
+  const initialGlobals = {
+    widgetState: state,
+    statePersistence: storage == null ? "none" : "local",
+  };
+
+  const channel = new MessageChannel();
+  channel.port1.addEventListener("message", (event) => {
+    const data = event.data;
+    if (typeof data !== "object" || data == null) {
+      return;
+    }
+    if (data.type === "widget-state-write") {
+      if (!Number.isSafeInteger(data.id) || data.id <= 0) {
+        return;
+      }
+      let ok = false;
+      try {
+        if (storage != null) {
+          const state = parseState(data.state);
+          storage.setItem(storageKey, JSON.stringify(state));
+          ok = true;
+        }
+      } catch {
+        // Storage denial, quota limits, and invalid state return a failed receipt.
+      }
+      channel.port1.postMessage({
+        type: "widget-state-result",
+        id: data.id,
+        ok,
+      });
+      return;
+    }
+    if (data.type === "height") {
+      const height = data.height;
+      if (
+        typeof height === "number" &&
+        Number.isFinite(height) &&
+        height >= 0 &&
+        height <= 10_000
+      ) {
+        frame.style.height = Math.ceil(height) + "px";
+      }
+      return;
+    }
+    if (data.type === "scroll-to") {
+      const top = data.top;
+      if (
+        typeof top === "number" &&
+        Number.isFinite(top) &&
+        top >= 0 &&
+        globalThis.navigator.userActivation?.isActive === true
+      ) {
+        globalThis.scrollTo({
+          top: Math.ceil(
+            globalThis.scrollY + frame.getBoundingClientRect().top + top,
+          ),
+        });
+      }
+      return;
+    }
+    if (data.type === "open-external") {
+      const rawHref = data.href;
+      if (typeof rawHref !== "string") {
+        return;
+      }
+      let href;
+      try {
+        const url = new URL(rawHref, document.baseURI);
+        if (url.protocol !== "https:") {
+          return;
+        }
+        href = url.href;
+      } catch {
+        return;
+      }
+      if (globalThis.navigator.userActivation?.isActive === true) {
+        const anchor = document.createElement("a");
+        anchor.href = href;
+        anchor.rel = "noopener noreferrer";
+        anchor.target = "_blank";
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+      }
+      return;
+    }
+    if (data.type === "follow-up") {
+      const prompt = data.prompt;
+      if (
+        typeof prompt !== "string" ||
+        globalThis.navigator.userActivation?.isActive !== true
+      ) {
+        return;
+      }
+      const title = data.title;
+      globalThis.prompt(typeof title === "string" ? title : prompt, prompt);
+    }
+  });
+  channel.port1.start();
+  const srcdoc = frame.dataset.srcdoc;
+  if (srcdoc == null) {
+    return;
+  }
+  globalThis.addEventListener("resize", () => {
+    const height = Number.parseFloat(frame.style.height);
+    if (!Number.isFinite(height) || height <= viewportHeight) {
+      frame.style.removeProperty("height");
+    }
+    viewportHeight = globalThis.innerHeight;
+    channel.port1.postMessage({ type: "measure" });
+  });
+  frame.addEventListener(
+    "load",
+    () => {
+      frame.contentWindow?.postMessage(
+        { type: "codex-visualization-initialize" },
+        "*",
+        [channel.port2],
+      );
+    },
+    { once: true },
+  );
+  // Match the trusted bootstrap element, not the same text in an authored title.
+  frame.srcdoc = srcdoc.replace(
+    '<script type="application/json" id="codex-visualization-widget-state">__CODEX_VISUALIZATION_WIDGET_STATE__<\/script>',
+    () =>
+      '<script type="application/json" id="codex-visualization-widget-state">' +
+      JSON.stringify(initialGlobals).replaceAll("<", "\\u003c") +
+      "<\/script>",
+  );
+  delete frame.dataset.srcdoc;
+})();
+</script>
+<script>
+window.addEventListener('message', (event) => {
+  const frame = document.getElementById('codex-visualization');
+  if (event.source !== frame.contentWindow || event.data?.type !== 'recap-theme') return;
+  const theme = event.data.theme;
+  if (theme !== 'light' && theme !== 'dark') return;
+  document.documentElement.style.colorScheme = theme;
+  document.documentElement.style.background = theme === 'dark' ? '#171119' : '#fffafd';
+});
+</script></body>
+</html>
